@@ -561,11 +561,11 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
 if __name__ == "__main__":
     # Define the allowed scope
     print("Hello")
-    allowed_domains = ["example.com", "test.example.com"]
+    allowed_domains = ["google.com", "youtube.com"]
     allowed_ip_ranges = ["192.168.1.0/24", "10.0.0.0/16"]
     
     # Set the security objective
-    objective = """Perform a comprehensive security assessment of example.com. 
+    objective = """Perform a comprehensive security assessment of google.com. 
     Identify open ports, discover hidden directories, and test for common web vulnerabilities 
     including SQL injection. Ensure all tests are non-intrusive and respect the target scope."""
     

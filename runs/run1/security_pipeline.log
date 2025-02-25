@@ -1,0 +1,150 @@
+2025-02-26 02:59:15,180 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of example.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-02-26 03:00:59,342 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of example.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-02-26 03:03:48,338 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of example.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-02-26 03:04:12,137 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 03:04:12,166 - INFO - Initial task plan created with 10 tasks
+2025-02-26 03:04:12,166 - INFO - Executing task: nmap_scan on example.com
+2025-02-26 03:04:12,166 - INFO - Executing command: nmap -sV -oN nmap_example.com.txt example.com
+2025-02-26 03:04:12,169 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:14,172 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:18,174 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:18,174 - INFO - Task completed in 6.01s: nmap_scan on example.com, success: False
+2025-02-26 03:04:18,175 - INFO - Executing task: nmap_scan on test.example.com
+2025-02-26 03:04:18,175 - INFO - Executing command: nmap -sV -oN nmap_test.example.com.txt test.example.com
+2025-02-26 03:04:18,177 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:20,180 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:24,183 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:24,183 - INFO - Task completed in 6.01s: nmap_scan on test.example.com, success: False
+2025-02-26 03:04:24,184 - INFO - Executing task: nmap_scan on 192.168.1.0/24
+2025-02-26 03:04:24,184 - ERROR - Target 192.168.1.0/24 is outside the allowed scope. Operation aborted.
+2025-02-26 03:04:24,184 - INFO - Task completed in 0.00s: nmap_scan on 192.168.1.0/24, success: False
+2025-02-26 03:04:24,185 - INFO - Executing task: nmap_scan on 10.0.0.0/16
+2025-02-26 03:04:24,185 - ERROR - Target 10.0.0.0/16 is outside the allowed scope. Operation aborted.
+2025-02-26 03:04:24,185 - INFO - Task completed in 0.00s: nmap_scan on 10.0.0.0/16, success: False
+2025-02-26 03:04:24,186 - INFO - Executing task: gobuster_scan on example.com
+2025-02-26 03:04:24,186 - INFO - Executing command: gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_example.com.txt
+2025-02-26 03:04:24,189 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:26,191 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:30,195 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:04:30,195 - INFO - Task completed in 6.01s: gobuster_scan on example.com, success: False
+2025-02-26 03:04:30,196 - INFO - Executing task: gobuster_scan on test.example.com
+2025-02-26 03:04:30,196 - INFO - Executing command: gobuster dir -u http://test.example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_test.example.com.txt
+2025-02-26 03:04:30,199 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:07:41,522 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of example.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-02-26 03:08:01,361 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 03:08:01,374 - INFO - Initial task plan created with 10 tasks
+2025-02-26 03:08:01,375 - INFO - Executing task: nmap_scan on example.com
+2025-02-26 03:08:01,375 - INFO - Executing command: nmap -sV -oN nmap_example.com.txt example.com
+2025-02-26 03:08:01,377 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:03,379 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:07,383 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:07,383 - INFO - Task completed in 6.01s: nmap_scan on example.com, success: False
+2025-02-26 03:08:07,384 - INFO - Executing task: nmap_scan on test.example.com
+2025-02-26 03:08:07,384 - INFO - Executing command: nmap -sV -oN nmap_test.example.com.txt test.example.com
+2025-02-26 03:08:07,386 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:09,388 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:13,391 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:13,391 - INFO - Task completed in 6.01s: nmap_scan on test.example.com, success: False
+2025-02-26 03:08:13,392 - INFO - Executing task: nmap_scan on 192.168.1.0/24
+2025-02-26 03:08:13,392 - ERROR - Target 192.168.1.0/24 is outside the allowed scope. Operation aborted.
+2025-02-26 03:08:13,392 - INFO - Task completed in 0.00s: nmap_scan on 192.168.1.0/24, success: False
+2025-02-26 03:08:13,393 - INFO - Executing task: nmap_scan on 10.0.0.0/16
+2025-02-26 03:08:13,393 - ERROR - Target 10.0.0.0/16 is outside the allowed scope. Operation aborted.
+2025-02-26 03:08:13,393 - INFO - Task completed in 0.00s: nmap_scan on 10.0.0.0/16, success: False
+2025-02-26 03:08:13,394 - INFO - Executing task: gobuster_scan on example.com
+2025-02-26 03:08:13,394 - INFO - Executing command: gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_example.com.txt
+2025-02-26 03:08:13,396 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:15,401 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:19,405 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:19,405 - INFO - Task completed in 6.01s: gobuster_scan on example.com, success: False
+2025-02-26 03:08:19,406 - INFO - Executing task: gobuster_scan on test.example.com
+2025-02-26 03:08:19,406 - INFO - Executing command: gobuster dir -u http://test.example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_test.example.com.txt
+2025-02-26 03:08:19,409 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:21,412 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:25,417 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:25,417 - INFO - Task completed in 6.01s: gobuster_scan on test.example.com, success: False
+2025-02-26 03:08:25,418 - INFO - Executing task: ffuf_scan on example.com
+2025-02-26 03:08:25,418 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_example.com.json -of json
+2025-02-26 03:08:25,421 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:27,425 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:31,429 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:31,429 - INFO - Task completed in 6.01s: ffuf_scan on example.com, success: False
+2025-02-26 03:08:31,430 - INFO - Executing task: ffuf_scan on test.example.com
+2025-02-26 03:08:31,430 - INFO - Executing command: ffuf -u http://test.example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_test.example.com.json -of json
+2025-02-26 03:08:31,433 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:33,438 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:37,441 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:37,441 - INFO - Task completed in 6.01s: ffuf_scan on test.example.com, success: False
+2025-02-26 03:08:37,442 - INFO - Executing task: sqlmap_scan on example.com
+2025-02-26 03:08:37,442 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
+2025-02-26 03:08:37,444 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:08:42,911 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of example.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-02-26 03:09:04,760 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 03:09:04,775 - INFO - Initial task plan created with 10 tasks
+2025-02-26 03:09:04,776 - INFO - Executing task: nmap_scan on example.com
+2025-02-26 03:09:04,776 - INFO - Executing command: nmap -sV -oN nmap_example.com.txt example.com
+2025-02-26 03:09:04,778 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:06,783 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:10,786 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:10,786 - INFO - Task completed in 6.01s: nmap_scan on example.com, success: False
+2025-02-26 03:09:10,788 - INFO - Executing task: nmap_scan on test.example.com
+2025-02-26 03:09:10,788 - INFO - Executing command: nmap -sV -oN nmap_test.example.com.txt test.example.com
+2025-02-26 03:09:10,791 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:12,796 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:16,800 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:16,800 - INFO - Task completed in 6.01s: nmap_scan on test.example.com, success: False
+2025-02-26 03:09:16,801 - INFO - Executing task: nmap_scan on 192.168.1.0/24
+2025-02-26 03:09:16,801 - ERROR - Target 192.168.1.0/24 is outside the allowed scope. Operation aborted.
+2025-02-26 03:09:16,801 - INFO - Task completed in 0.00s: nmap_scan on 192.168.1.0/24, success: False
+2025-02-26 03:09:16,802 - INFO - Executing task: nmap_scan on 10.0.0.0/16
+2025-02-26 03:09:16,802 - ERROR - Target 10.0.0.0/16 is outside the allowed scope. Operation aborted.
+2025-02-26 03:09:16,802 - INFO - Task completed in 0.00s: nmap_scan on 10.0.0.0/16, success: False
+2025-02-26 03:09:16,803 - INFO - Executing task: gobuster_scan on example.com
+2025-02-26 03:09:16,803 - INFO - Executing command: gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_example.com.txt
+2025-02-26 03:09:16,807 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:18,812 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:22,816 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:22,817 - INFO - Task completed in 6.01s: gobuster_scan on example.com, success: False
+2025-02-26 03:09:22,818 - INFO - Executing task: gobuster_scan on test.example.com
+2025-02-26 03:09:22,818 - INFO - Executing command: gobuster dir -u http://test.example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_test.example.com.txt
+2025-02-26 03:09:22,822 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:24,826 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:28,832 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:28,832 - INFO - Task completed in 6.01s: gobuster_scan on test.example.com, success: False
+2025-02-26 03:09:28,833 - INFO - Executing task: ffuf_scan on example.com
+2025-02-26 03:09:28,833 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_example.com.json -of json
+2025-02-26 03:09:28,837 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:30,843 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:34,849 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:34,849 - INFO - Task completed in 6.02s: ffuf_scan on example.com, success: False
+2025-02-26 03:09:34,850 - INFO - Executing task: ffuf_scan on test.example.com
+2025-02-26 03:09:34,850 - INFO - Executing command: ffuf -u http://test.example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_test.example.com.json -of json
+2025-02-26 03:09:34,855 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:36,861 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:40,866 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:40,866 - INFO - Task completed in 6.02s: ffuf_scan on test.example.com, success: False
+2025-02-26 03:09:40,868 - INFO - Executing task: sqlmap_scan on example.com
+2025-02-26 03:09:40,868 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
+2025-02-26 03:09:40,872 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:42,876 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:46,880 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:46,880 - INFO - Task completed in 6.01s: sqlmap_scan on example.com, success: False
+2025-02-26 03:09:46,881 - INFO - Executing task: sqlmap_scan on test.example.com
+2025-02-26 03:09:46,881 - INFO - Executing command: sqlmap -u http://test.example.com --batch --output-dir=sqlmap_results
+2025-02-26 03:09:46,884 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:48,887 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:52,890 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
+2025-02-26 03:09:52,891 - INFO - Task completed in 6.01s: sqlmap_scan on test.example.com, success: False
+2025-02-26 03:09:52,892 - INFO - Generating security report
+2025-02-26 03:10:51,102 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 03:10:51,108 - INFO - Security report generated and saved to security_report_20250226_031051.md
