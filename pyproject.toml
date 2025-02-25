@@ -15,7 +15,8 @@ dependencies = [
     "langchain-community (>=0.3.18,<0.4.0)",
     "langchain-openai (>=0.3.7,<0.4.0)",
     "openai (>=1.64.0,<2.0.0)",
-    "python-dotenv (>=1.0.1,<2.0.0)"
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "langgraph (>=0.2.74,<0.3.0)"
 ]
 
 
