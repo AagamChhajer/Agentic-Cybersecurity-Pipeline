@@ -6,7 +6,7 @@ authors = [
     {name = "Aagam Chhajer",email = "aagamchhajer@gmail.com"}
 ]
 readme = "README.md"
-requires-python = "3.11.2"
+requires-python = "3.11.9"
 dependencies = [
     "requests (>=2.32.3,<3.0.0)",
     "langchain (>=0.3.19,<0.4.0)",
