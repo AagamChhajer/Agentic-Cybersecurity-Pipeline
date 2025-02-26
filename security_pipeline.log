@@ -1,62 +1,145 @@
-2025-02-26 04:03:57,051 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of example.com. 
+2025-02-26 16:50:06,460 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of google.com. 
     Identify open ports, discover hidden directories, and test for common web vulnerabilities 
     including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
-2025-02-26 04:04:17,444 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-26 04:04:17,458 - INFO - Initial task plan created with 10 tasks
-2025-02-26 04:04:17,458 - INFO - Executing task: nmap_scan on example.com
-2025-02-26 04:04:17,469 - INFO - Executing command: nmap -sV -oN nmap_example.com.txt example.com
-2025-02-26 04:04:17,471 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:19,474 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:23,476 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:23,476 - INFO - Task completed in 6.01s: nmap_scan on example.com, success: False
-2025-02-26 04:04:23,477 - INFO - Executing task: nmap_scan on test.example.com
-2025-02-26 04:04:23,477 - INFO - Executing command: nmap -sV -oN nmap_test.example.com.txt test.example.com
-2025-02-26 04:04:23,480 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:25,483 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:29,485 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:29,485 - INFO - Task completed in 6.01s: nmap_scan on test.example.com, success: False
-2025-02-26 04:04:29,487 - INFO - Executing task: nmap_scan on 192.168.1.0/24
-2025-02-26 04:04:29,487 - ERROR - Target 192.168.1.0/24 is outside the allowed scope. Operation aborted.
-2025-02-26 04:04:29,487 - INFO - Task completed in 0.00s: nmap_scan on 192.168.1.0/24, success: False
-2025-02-26 04:04:29,487 - INFO - Executing task: nmap_scan on 10.0.0.0/16
-2025-02-26 04:04:29,487 - ERROR - Target 10.0.0.0/16 is outside the allowed scope. Operation aborted.
-2025-02-26 04:04:29,487 - INFO - Task completed in 0.00s: nmap_scan on 10.0.0.0/16, success: False
-2025-02-26 04:04:29,488 - INFO - Executing task: gobuster_scan on example.com
-2025-02-26 04:04:29,488 - INFO - Executing command: gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_example.com.txt
-2025-02-26 04:04:29,491 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:31,496 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:35,499 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:35,499 - INFO - Task completed in 6.01s: gobuster_scan on example.com, success: False
-2025-02-26 04:04:35,500 - INFO - Executing task: gobuster_scan on test.example.com
-2025-02-26 04:04:35,500 - INFO - Executing command: gobuster dir -u http://test.example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_test.example.com.txt
-2025-02-26 04:04:35,503 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:37,507 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:41,514 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:41,514 - INFO - Task completed in 6.01s: gobuster_scan on test.example.com, success: False
-2025-02-26 04:04:41,516 - INFO - Executing task: ffuf_scan on example.com
-2025-02-26 04:04:41,516 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_example.com.json -of json
-2025-02-26 04:04:41,522 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:43,527 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:47,531 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:47,532 - INFO - Task completed in 6.02s: ffuf_scan on example.com, success: False
-2025-02-26 04:04:47,532 - INFO - Executing task: ffuf_scan on test.example.com
-2025-02-26 04:04:47,532 - INFO - Executing command: ffuf -u http://test.example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_test.example.com.json -of json
-2025-02-26 04:04:47,538 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:49,544 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:53,549 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:53,549 - INFO - Task completed in 6.02s: ffuf_scan on test.example.com, success: False
-2025-02-26 04:04:53,550 - INFO - Executing task: sqlmap_scan on example.com
-2025-02-26 04:04:53,550 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
-2025-02-26 04:04:53,553 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:55,556 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:59,560 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:04:59,560 - INFO - Task completed in 6.01s: sqlmap_scan on example.com, success: False
-2025-02-26 04:04:59,562 - INFO - Executing task: sqlmap_scan on test.example.com
-2025-02-26 04:04:59,562 - INFO - Executing command: sqlmap -u http://test.example.com --batch --output-dir=sqlmap_results
-2025-02-26 04:04:59,564 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:05:01,567 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:05:05,570 - ERROR - Error executing command: [WinError 2] The system cannot find the file specified
-2025-02-26 04:05:05,571 - INFO - Task completed in 6.01s: sqlmap_scan on test.example.com, success: False
-2025-02-26 04:05:05,571 - INFO - Generating security report
-2025-02-26 04:05:22,771 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-26 04:05:22,780 - INFO - Security report generated and saved to security_report_20250226_040522.md
+2025-02-26 16:50:15,771 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 16:50:15,797 - INFO - Initial task plan created with 8 tasks
+2025-02-26 16:50:15,799 - INFO - Executing task: nmap_scan on example.com
+2025-02-26 16:50:15,800 - INFO - Executing command: nmap -sV -oN nmap_example.com.txt example.com
+2025-02-26 16:50:53,996 - INFO - Task completed in 38.20s: nmap_scan on example.com, success: True
+2025-02-26 16:50:56,346 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 16:50:56,353 - INFO - Added 3 follow-up tasks based on results analysis
+2025-02-26 16:50:56,354 - INFO - Executing task: nmap_scan on test.example.com
+2025-02-26 16:50:56,355 - INFO - Executing command: nmap -sV -oN nmap_test.example.com.txt test.example.com
+2025-02-26 16:50:56,870 - INFO - Task completed in 0.51s: nmap_scan on test.example.com, success: True
+2025-02-26 16:51:00,746 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 16:51:00,749 - INFO - Task nmap_scan:test.example.com already exists, skipping
+2025-02-26 16:51:00,750 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 16:51:00,751 - INFO - Executing task: gobuster_scan on example.com
+2025-02-26 16:51:00,751 - INFO - Executing command: gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_example.com.txt
+2025-02-26 16:51:00,810 - WARNING - Command failed (attempt 1/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:02,857 - WARNING - Command failed (attempt 2/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:06,903 - WARNING - Command failed (attempt 3/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:06,904 - INFO - Task completed in 6.15s: gobuster_scan on example.com, success: False
+2025-02-26 16:51:06,905 - INFO - Executing task: gobuster_scan on test.example.com
+2025-02-26 16:51:06,906 - INFO - Executing command: gobuster dir -u http://test.example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_test.example.com.txt
+2025-02-26 16:51:06,953 - WARNING - Command failed (attempt 1/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:08,998 - WARNING - Command failed (attempt 2/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:13,039 - WARNING - Command failed (attempt 3/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:13,040 - INFO - Task completed in 6.13s: gobuster_scan on test.example.com, success: False
+2025-02-26 16:51:13,041 - INFO - Executing task: ffuf_scan on example.com
+2025-02-26 16:51:13,042 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_example.com.json -of json
+2025-02-26 16:51:13,149 - WARNING - Command failed (attempt 1/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:15,189 - WARNING - Command failed (attempt 2/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:19,227 - WARNING - Command failed (attempt 3/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:19,228 - INFO - Task completed in 6.19s: ffuf_scan on example.com, success: False
+2025-02-26 16:51:19,230 - INFO - Executing task: ffuf_scan on test.example.com
+2025-02-26 16:51:19,231 - INFO - Executing command: ffuf -u http://test.example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_test.example.com.json -of json
+2025-02-26 16:51:19,268 - WARNING - Command failed (attempt 1/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:21,307 - WARNING - Command failed (attempt 2/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:25,344 - WARNING - Command failed (attempt 3/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:25,345 - INFO - Task completed in 6.11s: ffuf_scan on test.example.com, success: False
+2025-02-26 16:51:25,347 - INFO - Executing task: sqlmap_scan on example.com
+2025-02-26 16:51:25,347 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
+2025-02-26 16:51:27,754 - INFO - Task completed in 2.41s: sqlmap_scan on example.com, success: True
+2025-02-26 16:51:29,606 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 16:51:29,610 - INFO - Task sqlmap_scan:http://example.com already exists, skipping
+2025-02-26 16:51:29,610 - INFO - Task nmap_scan:example.com already exists, skipping
+2025-02-26 16:51:29,610 - INFO - Task gobuster_scan:http://example.com already exists, skipping
+2025-02-26 16:51:29,610 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 16:51:29,611 - INFO - Executing task: sqlmap_scan on test.example.com
+2025-02-26 16:51:29,613 - INFO - Executing command: sqlmap -u http://test.example.com --batch --output-dir=sqlmap_results
+2025-02-26 16:51:30,804 - INFO - Task completed in 1.19s: sqlmap_scan on test.example.com, success: True
+2025-02-26 16:51:33,062 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 16:51:33,064 - INFO - Task nmap_scan:test.example.com already exists, skipping
+2025-02-26 16:51:33,064 - INFO - Added 1 follow-up tasks based on results analysis
+2025-02-26 16:51:33,065 - INFO - Executing task: gobuster_scan on http://example.com
+2025-02-26 16:51:33,066 - INFO - Executing command: gobuster dir -u http://example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_example.com.txt
+2025-02-26 16:51:33,110 - WARNING - Command failed (attempt 1/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:35,154 - WARNING - Command failed (attempt 2/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:39,195 - WARNING - Command failed (attempt 3/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:39,195 - INFO - Task completed in 6.13s: gobuster_scan on http://example.com, success: False
+2025-02-26 16:51:39,197 - INFO - Executing task: ffuf_scan on http://example.com
+2025-02-26 16:51:39,197 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /usr/share/wordlists/dirb/common.txt -o ffuf_http_example.com.json -of json
+2025-02-26 16:51:39,232 - WARNING - Command failed (attempt 1/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:41,269 - WARNING - Command failed (attempt 2/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:45,304 - WARNING - Command failed (attempt 3/3): Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+Encountered error(s): 1 errors occured.
+	* CreateFile C:\usr\share\wordlists\dirb\common.txt: The system cannot find the path specified.
+
+
+2025-02-26 16:51:45,304 - INFO - Task completed in 6.11s: ffuf_scan on http://example.com, success: False
+2025-02-26 16:51:45,306 - INFO - Executing task: sqlmap_scan on http://example.com
+2025-02-26 16:51:45,306 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
+2025-02-26 16:51:47,231 - INFO - Task completed in 1.93s: sqlmap_scan on http://example.com, success: True
+2025-02-26 16:51:49,914 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 16:51:49,916 - INFO - Task sqlmap_scan:http://example.com already exists, skipping
+2025-02-26 16:51:49,916 - INFO - Task gobuster_scan:http://example.com already exists, skipping
+2025-02-26 16:51:49,917 - INFO - Added 1 follow-up tasks based on results analysis
+2025-02-26 16:51:49,918 - INFO - Executing task: gobuster_scan on http://test.example.com
+2025-02-26 16:51:49,918 - INFO - Executing command: gobuster dir -u http://test.example.com -w /usr/share/wordlists/dirb/common.txt -o gobuster_http_test.example.com.txt
+2025-02-26 16:51:49,959 - WARNING - Command failed (attempt 1/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:52,001 - WARNING - Command failed (attempt 2/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:56,043 - WARNING - Command failed (attempt 3/3): Error: error on parsing arguments: wordlist file "/usr/share/wordlists/dirb/common.txt" does not exist: CreateFile /usr/share/wordlists/dirb/common.txt: The system cannot find the path specified.
+
+2025-02-26 16:51:56,043 - INFO - Task completed in 6.12s: gobuster_scan on http://test.example.com, success: False

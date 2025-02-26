@@ -1,0 +1,4 @@
+# Nmap 7.95 scan initiated Wed Feb 26 16:50:56 2025 as: nmap -sV -oN nmap_test.example.com.txt test.example.com
+Failed to resolve "test.example.com".
+WARNING: No targets were specified, so 0 hosts scanned.
+# Nmap done at Wed Feb 26 16:50:56 2025 -- 0 IP addresses (0 hosts up) scanned in 0.45 seconds

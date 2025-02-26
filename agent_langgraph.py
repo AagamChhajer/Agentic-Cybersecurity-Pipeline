@@ -251,7 +251,7 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
     # Set up LLM
     load_dotenv()
     api_key = os.environ.get("OPENAI_API_KEY", "")
-    llm = ChatOpenAI(temperature=0, model="gpt-4", api_key=api_key)
+    llm = ChatOpenAI(temperature=0, model="gpt-4o-mini", api_key=api_key)
     
     # Create initial task plan
     prompt = ChatPromptTemplate.from_messages([
@@ -384,7 +384,7 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
         return state
     
     # Set up LLM
-    llm = ChatOpenAI(temperature=0, model="gpt-4")
+    llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
     
     # Create follow-up tasks
     prompt = ChatPromptTemplate.from_messages([
@@ -461,7 +461,7 @@ def generate_report(state: SecurityAuditState) -> SecurityAuditState:
     logging.info("Generating security report")
     
     # Set up LLM
-    llm = ChatOpenAI(temperature=0, model="gpt-4")
+    llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
     
     # Create report
     prompt = ChatPromptTemplate.from_messages([
@@ -561,7 +561,7 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
 if __name__ == "__main__":
     # Define the allowed scope
     print("Hello")
-    allowed_domains = ["google.com", "youtube.com"]
+    allowed_domains = ["example.com", "test.example.com"]
     allowed_ip_ranges = ["192.168.1.0/24", "10.0.0.0/16"]
     
     # Set the security objective
