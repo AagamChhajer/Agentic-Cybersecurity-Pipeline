@@ -1,0 +1,1 @@
+http://google.com (GET)  # /opt/homebrew/bin/sqlmap -u http://google.com --batch --output-dir=sqlmap_results
