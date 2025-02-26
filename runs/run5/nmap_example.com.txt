@@ -1,0 +1,1 @@
+# Nmap 7.95 scan initiated Wed Feb 26 20:09:23 2025 as: nmap -sV -oN nmap_example.com.txt example.com

@@ -14,6 +14,9 @@ from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
 
+
+
+
 print("Before Logging")
 # Initialize Logging
 logging.basicConfig(
@@ -30,6 +33,7 @@ class SecurityAuditState(TypedDict):
     completed_tasks: List  # List of completed tasks
     results: Dict  # Results of completed tasks
     report: str  # Final security report
+    task_complete: bool  # Added stop condition flag
 
 
 class TargetScope:
@@ -143,7 +147,7 @@ class NmapScanner(SecurityScanner):
 class GobusterScanner(SecurityScanner):
     """Tool for running directory discovery with Gobuster."""
     
-    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/usr/share/wordlists/dirb/common.txt") -> Dict:
+    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt") -> Dict:
         """Run Gobuster directory scan."""
         if not target.startswith(('http://', 'https://')):
             target = f"http://{target}"
@@ -169,7 +173,7 @@ class GobusterScanner(SecurityScanner):
 class FfufScanner(SecurityScanner):
     """Tool for fuzzing with ffuf."""
     
-    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/usr/share/wordlists/dirb/common.txt") -> Dict:
+    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt") -> Dict:
         """Run ffuf fuzzing."""
         if not target.startswith(('http://', 'https://')):
             target = f"http://{target}"
@@ -450,10 +454,11 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
 
 def should_continue(state: SecurityAuditState) -> str:
     """Determine whether to continue executing tasks or finalize the audit."""
+    if state.get("task_complete", False):
+        return "generate_report"
     if state['task_queue']:
         return "execute_task"
-    else:
-        return "generate_report"
+    return "generate_report"
 
 
 def generate_report(state: SecurityAuditState) -> SecurityAuditState:
@@ -499,6 +504,7 @@ def generate_report(state: SecurityAuditState) -> SecurityAuditState:
     
     # Update state
     state['report'] = response.content
+    state['task_complete'] = True  # Mark audit as complete
     
     logging.info(f"Security report generated and saved to {report_path}")
     return state
@@ -547,12 +553,13 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
         task_queue=[],
         completed_tasks=[],
         results={},
-        report=""
+        report="",
+        task_complete=False  # Initialize complete flag
     )
     
     # Build and run workflow
     workflow = build_security_audit_workflow()
-    final_state = workflow.invoke(init_state)
+    final_state = workflow.invoke(init_state, config = {"recursion_limit": 50})
     
     return final_state['report']
 
@@ -565,7 +572,7 @@ if __name__ == "__main__":
     allowed_ip_ranges = ["192.168.1.0/24", "10.0.0.0/16"]
     
     # Set the security objective
-    objective = """Perform a comprehensive security assessment of google.com. 
+    objective = """Perform a comprehensive security assessment of example.com. 
     Identify open ports, discover hidden directories, and test for common web vulnerabilities 
     including SQL injection. Ensure all tests are non-intrusive and respect the target scope."""
     

@@ -1,0 +1,4 @@
+# Nmap 7.95 scan initiated Wed Feb 26 19:42:52 2025 as: nmap -sV -oN nmap_https:__example.com.txt https://example.com
+Unable to split netmask from target expression: "https://example.com"
+WARNING: No targets were specified, so 0 hosts scanned.
+# Nmap done at Wed Feb 26 19:42:52 2025 -- 0 IP addresses (0 hosts up) scanned in 0.09 seconds

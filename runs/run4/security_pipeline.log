@@ -1,0 +1,86 @@
+2025-02-26 18:29:54,409 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of google.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-02-26 18:29:59,248 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:29:59,264 - INFO - Initial task plan created with 8 tasks
+2025-02-26 18:29:59,265 - INFO - Executing task: nmap_scan on example.com
+2025-02-26 18:29:59,265 - INFO - Executing command: nmap -sV -oN nmap_example.com.txt example.com
+2025-02-26 18:32:47,050 - INFO - Task completed in 167.79s: nmap_scan on example.com, success: True
+2025-02-26 18:32:49,317 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:32:49,320 - INFO - Added 3 follow-up tasks based on results analysis
+2025-02-26 18:32:49,321 - INFO - Executing task: nmap_scan on test.example.com
+2025-02-26 18:32:49,322 - INFO - Executing command: nmap -sV -oN nmap_test.example.com.txt test.example.com
+2025-02-26 18:32:49,742 - INFO - Task completed in 0.42s: nmap_scan on test.example.com, success: True
+2025-02-26 18:32:51,286 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:32:51,288 - INFO - Task nmap_scan:test.example.com already exists, skipping
+2025-02-26 18:32:51,288 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 18:32:51,290 - INFO - Executing task: gobuster_scan on example.com
+2025-02-26 18:32:51,290 - INFO - Executing command: gobuster dir -u http://example.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_example.com.txt
+2025-02-26 18:36:39,075 - INFO - Task completed in 227.79s: gobuster_scan on example.com, success: True
+2025-02-26 18:36:41,941 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:36:41,944 - INFO - Task nmap_scan:example.com already exists, skipping
+2025-02-26 18:36:41,944 - INFO - Added 2 follow-up tasks based on results analysis
+2025-02-26 18:36:41,946 - INFO - Executing task: gobuster_scan on test.example.com
+2025-02-26 18:36:41,946 - INFO - Executing command: gobuster dir -u http://test.example.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_test.example.com.txt
+2025-02-26 18:36:41,965 - WARNING - Command failed (attempt 1/3): Error: error on running gobuster: unable to connect to http://test.example.com/: Get "http://test.example.com/": dial tcp: lookup test.example.com: no such host
+
+2025-02-26 18:36:43,989 - WARNING - Command failed (attempt 2/3): Error: error on running gobuster: unable to connect to http://test.example.com/: Get "http://test.example.com/": dial tcp: lookup test.example.com: no such host
+
+2025-02-26 18:36:48,015 - WARNING - Command failed (attempt 3/3): Error: error on running gobuster: unable to connect to http://test.example.com/: Get "http://test.example.com/": dial tcp: lookup test.example.com: no such host
+
+2025-02-26 18:36:48,015 - INFO - Task completed in 6.07s: gobuster_scan on test.example.com, success: False
+2025-02-26 18:36:48,016 - INFO - Executing task: ffuf_scan on example.com
+2025-02-26 18:36:48,016 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_example.com.json -of json
+2025-02-26 18:37:45,828 - INFO - Task completed in 57.81s: ffuf_scan on example.com, success: True
+2025-02-26 18:37:47,885 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:37:47,888 - INFO - Task gobuster_scan:http://example.com already exists, skipping
+2025-02-26 18:37:47,888 - INFO - Task sqlmap_scan:http://example.com/index.html already exists, skipping
+2025-02-26 18:37:47,888 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 18:37:47,889 - INFO - Executing task: ffuf_scan on test.example.com
+2025-02-26 18:37:47,890 - INFO - Executing command: ffuf -u http://test.example.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_test.example.com.json -of json
+2025-02-26 18:37:48,037 - INFO - Task completed in 0.15s: ffuf_scan on test.example.com, success: True
+2025-02-26 18:37:49,932 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:37:49,935 - INFO - Task nmap_scan:test.example.com already exists, skipping
+2025-02-26 18:37:49,935 - INFO - Added 1 follow-up tasks based on results analysis
+2025-02-26 18:37:49,936 - INFO - Executing task: sqlmap_scan on example.com
+2025-02-26 18:37:49,936 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
+2025-02-26 18:37:51,490 - INFO - Task completed in 1.55s: sqlmap_scan on example.com, success: True
+2025-02-26 18:37:53,926 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:37:53,929 - INFO - Task sqlmap_scan:http://example.com already exists, skipping
+2025-02-26 18:37:53,929 - INFO - Task nmap_scan:example.com already exists, skipping
+2025-02-26 18:37:53,929 - INFO - Task gobuster_scan:http://example.com already exists, skipping
+2025-02-26 18:37:53,929 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 18:37:53,930 - INFO - Executing task: sqlmap_scan on test.example.com
+2025-02-26 18:37:53,930 - INFO - Executing command: sqlmap -u http://test.example.com --batch --output-dir=sqlmap_results
+2025-02-26 18:37:54,263 - INFO - Task completed in 0.33s: sqlmap_scan on test.example.com, success: True
+2025-02-26 18:37:56,569 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:37:56,572 - INFO - Task nmap_scan:test.example.com already exists, skipping
+2025-02-26 18:37:56,573 - INFO - Task gobuster_scan:http://test.example.com already exists, skipping
+2025-02-26 18:37:56,573 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 18:37:56,574 - INFO - Executing task: gobuster_scan on http://example.com
+2025-02-26 18:37:56,574 - INFO - Executing command: gobuster dir -u http://example.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_example.com.txt
+2025-02-26 18:41:53,306 - INFO - Task completed in 236.73s: gobuster_scan on http://example.com, success: True
+2025-02-26 18:41:55,592 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:41:55,593 - INFO - Task ffuf_scan:http://example.com already exists, skipping
+2025-02-26 18:41:55,594 - INFO - Task sqlmap_scan:http://example.com/index.html already exists, skipping
+2025-02-26 18:41:55,594 - INFO - Added 1 follow-up tasks based on results analysis
+2025-02-26 18:41:55,595 - INFO - Executing task: ffuf_scan on https://example.com
+2025-02-26 18:41:55,595 - INFO - Executing command: ffuf -u https://example.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_https_example.com.json -of json
+2025-02-26 18:42:57,935 - INFO - Task completed in 62.34s: ffuf_scan on https://example.com, success: True
+2025-02-26 18:43:00,140 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:43:00,145 - INFO - Added 2 follow-up tasks based on results analysis
+2025-02-26 18:43:00,147 - INFO - Executing task: sqlmap_scan on http://example.com
+2025-02-26 18:43:00,147 - INFO - Executing command: sqlmap -u http://example.com --batch --output-dir=sqlmap_results
+2025-02-26 18:43:01,507 - INFO - Task completed in 1.36s: sqlmap_scan on http://example.com, success: True
+2025-02-26 18:43:04,400 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:43:04,403 - INFO - Task sqlmap_scan:http://example.com already exists, skipping
+2025-02-26 18:43:04,403 - INFO - Task nmap_scan:http://example.com already exists, skipping
+2025-02-26 18:43:04,403 - INFO - Task gobuster_scan:http://example.com already exists, skipping
+2025-02-26 18:43:04,403 - INFO - Added 0 follow-up tasks based on results analysis
+2025-02-26 18:43:04,404 - INFO - Executing task: ffuf_scan on http://example.com
+2025-02-26 18:43:04,404 - INFO - Executing command: ffuf -u http://example.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_example.com.json -of json
+2025-02-26 18:43:56,551 - INFO - Task completed in 52.15s: ffuf_scan on http://example.com, success: True
+2025-02-26 18:43:58,520 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-02-26 18:43:58,526 - INFO - Task gobuster_scan:http://example.com already exists, skipping
+2025-02-26 18:43:58,526 - INFO - Task sqlmap_scan:http://example.com/index.html already exists, skipping
+2025-02-26 18:43:58,526 - INFO - Added 0 follow-up tasks based on results analysis

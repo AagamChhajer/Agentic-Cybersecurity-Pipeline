@@ -1,0 +1,12 @@
+# Nmap 7.95 scan initiated Wed Feb 26 18:30:00 2025 as: nmap -sV -oN nmap_example.com.txt example.com
+Nmap scan report for example.com (96.7.128.175)
+Host is up (0.21s latency).
+Other addresses for example.com (not scanned): 2600:1406:3a00:21::173e:2e66 2600:1406:bc00:53::b81e:94c8 2600:1406:bc00:53::b81e:94ce 2600:1408:ec00:36::1736:7f24 2600:1408:ec00:36::1736:7f31 2600:1406:3a00:21::173e:2e65 96.7.128.198 23.215.0.138 23.192.228.84 23.215.0.136 23.192.228.80
+rDNS record for 96.7.128.175: a96-7-128-175.deploy.static.akamaitechnologies.com
+Not shown: 998 filtered tcp ports (no-response)
+PORT    STATE SERVICE  VERSION
+80/tcp  open  http     AkamaiGHost (Akamai's HTTP Acceleration/Mirror service)
+443/tcp open  ssl/http AkamaiGHost (Akamai's HTTP Acceleration/Mirror service)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Feb 26 18:32:47 2025 -- 1 IP address (1 host up) scanned in 166.54 seconds
