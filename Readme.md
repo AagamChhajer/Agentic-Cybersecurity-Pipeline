@@ -221,7 +221,7 @@ The Agentic Cybersecurity Pipeline is an automated security assessment tool that
 
 Watch our demo video to see the pipeline in action:
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/60mABSoYDec/0.jpg)](https://www.youtube.com/watch?v=60mABSoYDec)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/60mABSoYDec/0.jpg)](https://github.com/user-attachments/assets/87785301-7c85-4b75-9264-12e3a9ec67ca)
 
 
 
