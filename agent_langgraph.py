@@ -34,6 +34,9 @@ class SecurityAuditState(TypedDict):
     results: Dict  # Results of completed tasks
     report: str  # Final security report
     task_complete: bool  # Added stop condition flag
+    iteration_count: int  # Track number of iterations
+    max_iterations: int  # Maximum allowed iterations
+    seen_tasks: Dict[str, bool]  # Track unique tasks that have been processed
 
 
 class TargetScope:
@@ -244,6 +247,11 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
     """Initialize the security audit with objective and scope."""
     logging.info(f"Initializing security audit with objective: {state['objective']}")
     
+    # Initialize iteration tracking
+    state['iteration_count'] = 0
+    state['max_iterations'] = 25  # Adjust this value based on your needs
+    state['seen_tasks'] = {}
+    
     # Create or restore target scope
     if isinstance(state['target_scope'], dict):
         target_scope = TargetScope.from_dict(state['target_scope'])
@@ -310,7 +318,16 @@ def execute_next_task(state: SecurityAuditState) -> SecurityAuditState:
     
     # Get the next task
     task = state['task_queue'].pop(0)
-    logging.info(f"Executing task: {task['task_type']} on {task['target']}")
+    task_signature = f"{task['task_type']}:{task['target']}"
+    
+    # Skip if we've seen this task before
+    if task_signature in state['seen_tasks']:
+        logging.info(f"Skipping duplicate task: {task_signature}")
+        return state
+        
+    state['seen_tasks'][task_signature] = True
+    
+    logging.info(f"Executing task: {task_signature}")
     
     # Create target scope
     target_scope = TargetScope.from_dict(state['target_scope'])
@@ -352,7 +369,7 @@ def execute_next_task(state: SecurityAuditState) -> SecurityAuditState:
         success = False
     
     execution_time = time.time() - start_time
-    logging.info(f"Task completed in {execution_time:.2f}s: {task['task_type']} on {task['target']}, success: {success}")
+    logging.info(f"Task completed in {execution_time:.2f}s: {task_signature}, success: {success}")
     
     # Record result
     task_result = {
@@ -367,7 +384,6 @@ def execute_next_task(state: SecurityAuditState) -> SecurityAuditState:
     state['completed_tasks'].append(task)
     
     # Store result
-    task_signature = f"{task['task_type']}:{task['target']}"
     state['results'][task_signature] = task_result
     
     return state
@@ -444,6 +460,10 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
         
         filtered_tasks.append(task)
     
+    # Limit number of follow-up tasks to prevent explosion
+    max_follow_up_tasks = 5
+    filtered_tasks = filtered_tasks[:max_follow_up_tasks]
+    
     # Sort by priority and add to queue
     filtered_tasks.sort(key=lambda x: x.get('priority', 3))
     state['task_queue'].extend(filtered_tasks)
@@ -454,11 +474,24 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
 
 def should_continue(state: SecurityAuditState) -> str:
     """Determine whether to continue executing tasks or finalize the audit."""
+    # Check iteration limit
+    state['iteration_count'] = state.get('iteration_count', 0) + 1
+    
+    # Log progress
+    logging.info(f"Iteration {state['iteration_count']}/{state['max_iterations']}, "
+                f"Remaining tasks: {len(state['task_queue'])}")
+    
+    # Check termination conditions
     if state.get("task_complete", False):
         return "generate_report"
-    if state['task_queue']:
-        return "execute_task"
-    return "generate_report"
+    if state['iteration_count'] >= state['max_iterations']:
+        logging.warning("Maximum iterations reached, generating report")
+        return "generate_report"
+    if not state['task_queue']:
+        return "generate_report"
+        
+    # Continue with next task
+    return "execute_task"
 
 
 def generate_report(state: SecurityAuditState) -> SecurityAuditState:
@@ -554,12 +587,15 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
         completed_tasks=[],
         results={},
         report="",
-        task_complete=False  # Initialize complete flag
+        task_complete=False,
+        iteration_count=0,
+        max_iterations=25,
+        seen_tasks={}
     )
     
     # Build and run workflow
     workflow = build_security_audit_workflow()
-    final_state = workflow.invoke(init_state, config = {"recursion_limit": 50})
+    final_state = workflow.invoke(init_state)
     
     return final_state['report']
 

@@ -1,0 +1,6 @@
+/explore              (Status: 301) [Size: 0] [--> https://google.com/travel/explore]
+/flights              (Status: 301) [Size: 0] [--> https://google.com/travel/flights]
+/guide                (Status: 301) [Size: 231] [--> http://www.google.com/travel/guide]
+/hotels               (Status: 301) [Size: 0] [--> https://google.com/travel/hotels]
+/search               (Status: 301) [Size: 0] [--> https://google.com/travel/search]
+/settings             (Status: 301) [Size: 0] [--> https://google.com/travel/settings]

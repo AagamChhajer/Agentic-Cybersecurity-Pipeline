@@ -1,0 +1,4 @@
+# Nmap 7.95 scan initiated Fri Feb 28 18:29:27 2025 as: nmap -sV -oN nmap_http:__google.com_reporting.txt http://google.com/reporting
+Unable to split netmask from target expression: "http://google.com/reporting"
+WARNING: No targets were specified, so 0 hosts scanned.
+# Nmap done at Fri Feb 28 18:29:27 2025 -- 0 IP addresses (0 hosts up) scanned in 0.06 seconds
