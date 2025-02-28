@@ -4,7 +4,7 @@ import time
 import logging
 import re
 import ipaddress
-from typing import TypedDict, List, Dict, Any, Tuple, Optional
+from typing import TypedDict, List, Dict, Any, Tuple, Optional, Annotated
 from subprocess import Popen, PIPE, TimeoutExpired
 from dotenv import load_dotenv
 
@@ -13,6 +13,7 @@ from langgraph.graph import START, END, StateGraph
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_openai import ChatOpenAI
+from langgraph.managed.is_last_step import RemainingSteps
 
 
 
@@ -34,8 +35,7 @@ class SecurityAuditState(TypedDict):
     results: Dict  # Results of completed tasks
     report: str  # Final security report
     task_complete: bool  # Added stop condition flag
-    iteration_count: int  # Track number of iterations
-    max_iterations: int  # Maximum allowed iterations
+    remaining_steps: RemainingSteps  # Track remaining steps
     seen_tasks: Dict[str, bool]  # Track unique tasks that have been processed
 
 
@@ -247,10 +247,9 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
     """Initialize the security audit with objective and scope."""
     logging.info(f"Initializing security audit with objective: {state['objective']}")
     
-    # Initialize iteration tracking
-    state['iteration_count'] = 0
-    state['max_iterations'] = 25  # Adjust this value based on your needs
-    state['seen_tasks'] = {}
+    # Initialize state tracking
+    state['remaining_steps'] = 50  # Set maximum number of steps
+    state['seen_tasks'] = {}  # Initialize task deduplication tracking
     
     # Create or restore target scope
     if isinstance(state['target_scope'], dict):
@@ -474,18 +473,13 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
 
 def should_continue(state: SecurityAuditState) -> str:
     """Determine whether to continue executing tasks or finalize the audit."""
-    # Check iteration limit
-    state['iteration_count'] = state.get('iteration_count', 0) + 1
-    
-    # Log progress
-    logging.info(f"Iteration {state['iteration_count']}/{state['max_iterations']}, "
-                f"Remaining tasks: {len(state['task_queue'])}")
-    
-    # Check termination conditions
-    if state.get("task_complete", False):
+    # Check remaining steps
+    if state["remaining_steps"] <= 2:
+        logging.warning("Maximum steps reached, generating report")
         return "generate_report"
-    if state['iteration_count'] >= state['max_iterations']:
-        logging.warning("Maximum iterations reached, generating report")
+    
+    # Check other termination conditions    
+    if state.get("task_complete", False):
         return "generate_report"
     if not state['task_queue']:
         return "generate_report"
@@ -588,14 +582,13 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
         results={},
         report="",
         task_complete=False,
-        iteration_count=0,
-        max_iterations=25,
-        seen_tasks={}
+        remaining_steps=50,  # Set maximum number of steps
+        seen_tasks={}  # Initialize task deduplication tracking
     )
     
     # Build and run workflow
     workflow = build_security_audit_workflow()
-    final_state = workflow.invoke(init_state, config={"configurable": {"max_iterations": 100}})
+    final_state = workflow.invoke(init_state)
     
     return final_state['report']
 
