@@ -31,7 +31,7 @@ file_handler.setLevel(logging.INFO)
 # Stream handler for terminal output
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setFormatter(formatter)
-stream_handler.setLevel(logging.INFO) 
+stream_handler.setLevel(logging.INFO)
 
 # Add both handlers to the logger
 logger.addHandler(file_handler)
