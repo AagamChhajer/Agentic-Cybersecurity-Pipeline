@@ -595,7 +595,7 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
     
     # Build and run workflow
     workflow = build_security_audit_workflow()
-    final_state = workflow.invoke(init_state)
+    final_state = workflow.invoke(init_state, config={"configurable": {"max_iterations": 100}})
     
     return final_state['report']
 
