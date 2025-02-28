@@ -167,7 +167,7 @@ class NmapScanner(SecurityScanner):
 class GobusterScanner(SecurityScanner):
     """Tool for running directory discovery with Gobuster."""
     
-    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt") -> Dict:
+    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/wordlists/common.txt") -> Dict:
         """Run Gobuster directory scan."""
         if not target.startswith(('http://', 'https://')):
             target = f"http://{target}"
@@ -193,7 +193,7 @@ class GobusterScanner(SecurityScanner):
 class FfufScanner(SecurityScanner):
     """Tool for fuzzing with ffuf."""
     
-    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt") -> Dict:
+    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/wordlists/common.txt") -> Dict:
         """Run ffuf fuzzing."""
         if not target.startswith(('http://', 'https://')):
             target = f"http://{target}"
