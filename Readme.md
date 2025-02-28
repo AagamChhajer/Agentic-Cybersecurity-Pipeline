@@ -4,7 +4,7 @@ This guide provides step-by-step instructions on how to set up this project on a
 
 ## Prerequisites
 
-1. **Python**: Ensure Python 3.x is installed on your system.
+1. **Python**: Ensure Python 3.11.9 is installed on your system.
 2. **Poetry**: If not already installed, follow the instructions below.
 
 ## 1. Install Poetry
@@ -239,7 +239,7 @@ pip list
 * If you encounter any issues with Python versions, make sure the correct version is installed and set up using:
 
 ```powershell
-poetry env use python3.x
+poetry env use python3.11.9
 ```
 
 * If security tools aren't working, ensure they're properly installed and added to your system PATH
