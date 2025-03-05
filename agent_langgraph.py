@@ -29,13 +29,13 @@ file_handler.setFormatter(formatter)
 file_handler.setLevel(logging.INFO)
 
 # Stream handler for terminal output
-stream_handler = logging.StreamHandler(sys.stdout)
-stream_handler.setFormatter(formatter)
-stream_handler.setLevel(logging.INFO) 
+# stream_handler = logging.StreamHandler(sys.stdout)
+# stream_handler.setFormatter(formatter)
+# stream_handler.setLevel(logging.INFO) 
 
 # Add both handlers to the logger
 logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+# logger.addHandler(stream_handler)
 
 # Ensure we don't get duplicate logs
 logger.propagate = False
@@ -273,7 +273,7 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
         target_scope = TargetScope.from_dict(state['target_scope'])
     else:
         # Default scope if none provided
-        target_scope = TargetScope(["example.com"], ["192.168.1.0/24"])
+        target_scope = TargetScope(["youtube.com"], ["192.168.1.0/24"])
         state['target_scope'] = target_scope.to_dict()
     
     # Set up LLM
@@ -316,6 +316,18 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
     
     # Sort tasks by priority
     task_list.sort(key=lambda x: x.get('priority', 3))
+    tasks_log_dir = 'tasks_logs'
+    os.makedirs(tasks_log_dir, exist_ok=True)
+    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    tasks_log_path = os.path.join(tasks_log_dir, f"initial_tasks_{timestamp}.json")
+    
+    with open(tasks_log_path, 'w') as f:
+        json.dump({
+            "timestamp": timestamp,
+            "objective": state['objective'],
+            "target_scope": state['target_scope'],
+            "tasks": task_list
+        }, f, indent=2)
     
     # Update state
     state['task_queue'] = task_list
@@ -482,6 +494,39 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
     
     # Sort by priority and add to queue
     filtered_tasks.sort(key=lambda x: x.get('priority', 3))
+    if filtered_tasks:
+        # Find the most recent tasks log file
+            tasks_log_dir = 'tasks_logs'
+            log_files = sorted([f for f in os.listdir(tasks_log_dir) if f.startswith('initial_tasks_')], reverse=True)
+            
+            if log_files:
+                most_recent_log = os.path.join(tasks_log_dir, log_files[0])
+                
+                # Read existing log
+                with open(most_recent_log, 'r') as f:
+                    log_data = json.load(f)
+                
+                # Add follow-up tasks to the log
+                if 'follow_up_tasks' not in log_data:
+                    log_data['follow_up_tasks'] = []
+                
+                # Add timestamp and details to follow-up tasks
+                for task in filtered_tasks:
+                    task['generated_at'] = time.strftime("%Y%m%d_%H%M%S")
+                    task['source_task'] = {
+                        'type': last_task['task_type'],
+                        'target': last_task['target']
+                    }
+                
+                log_data['follow_up_tasks'].extend(filtered_tasks)
+                
+                # Write back to the file
+                with open(most_recent_log, 'w') as f:
+                    json.dump(log_data, f, indent=2)
+                
+                logger.info(f"Follow-up tasks logged to {most_recent_log}")
+    
+    
     state['task_queue'].extend(filtered_tasks)
     
     logger.info(f"Added {len(filtered_tasks)} follow-up tasks based on results analysis")
@@ -614,11 +659,12 @@ def run_security_audit(objective: str, allowed_domains: List[str], allowed_ip_ra
 if __name__ == "__main__":
     # Define the allowed scope
     print("Hello")
-    allowed_domains = ["example.com", "test.example.com"]
+    # allowed_domains = ["example.com", "test.example.com"]
+    allowed_domains = ["google.com"]
     allowed_ip_ranges = ["192.168.1.0/24", "10.0.0.0/16"]
     
     # Set the security objective
-    objective = """Perform a comprehensive security assessment of example.com. 
+    objective = """Perform a comprehensive security assessment of google.com. 
     Identify open ports, discover hidden directories, and test for common web vulnerabilities 
     including SQL injection. Ensure all tests are non-intrusive and respect the target scope."""
     

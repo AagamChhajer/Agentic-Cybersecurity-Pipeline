@@ -1,156 +1,85 @@
-2025-02-28 23:06:20,616 - INFO - Security Audit Pipeline Initialized
-2025-02-28 23:06:30,671 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment. Identify open ports, discover hidden directories, and test for common web vulnerabilities.
-2025-02-28 23:06:31,194 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment. Identify open ports, discover hidden directories, and test for common web vulnerabilities.
-2025-02-28 23:06:34,495 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:06:34,507 - INFO - Initial task plan created with 4 tasks
-2025-02-28 23:06:34,509 - INFO - Executing task: nmap_scan:google.com
-2025-02-28 23:06:34,509 - INFO - Executing command: nmap -sV -oN nmap_google.com.txt google.com
-2025-02-28 23:06:34,901 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:06:34,908 - INFO - Initial task plan created with 4 tasks
-2025-02-28 23:06:34,909 - INFO - Executing task: nmap_scan:google.com
-2025-02-28 23:06:34,910 - INFO - Executing command: nmap -sV -oN nmap_google.com.txt google.com
-2025-02-28 23:08:24,715 - INFO - Task completed in 109.81s: nmap_scan:google.com, success: True
-2025-02-28 23:08:25,883 - INFO - Task completed in 111.37s: nmap_scan:google.com, success: True
-2025-02-28 23:08:27,749 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:08:27,752 - INFO - Added 3 follow-up tasks based on results analysis
-2025-02-28 23:08:27,753 - INFO - Executing task: gobuster_scan:google.com
-2025-02-28 23:08:27,753 - INFO - Executing command: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
-2025-02-28 23:08:29,440 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:08:29,442 - INFO - Added 3 follow-up tasks based on results analysis
-2025-02-28 23:08:29,444 - INFO - Executing task: gobuster_scan:google.com
-2025-02-28 23:08:29,445 - INFO - Executing command: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
-2025-02-28 23:09:17,711 - INFO - Task completed in 49.96s: gobuster_scan:google.com, success: True
-2025-02-28 23:09:18,928 - INFO - Task completed in 49.48s: gobuster_scan:google.com, success: True
-2025-02-28 23:09:22,132 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:09:22,135 - INFO - Added 5 follow-up tasks based on results analysis
-2025-02-28 23:09:22,137 - INFO - Executing task: ffuf_scan:google.com
-2025-02-28 23:09:22,137 - INFO - Executing command: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
-2025-02-28 23:09:24,777 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:09:24,779 - INFO - Added 5 follow-up tasks based on results analysis
-2025-02-28 23:09:24,780 - INFO - Executing task: ffuf_scan:google.com
-2025-02-28 23:09:24,780 - INFO - Executing command: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
-2025-02-28 23:09:34,449 - INFO - Task completed in 12.31s: ffuf_scan:google.com, success: True
-2025-02-28 23:09:37,071 - INFO - Task completed in 12.29s: ffuf_scan:google.com, success: True
-2025-02-28 23:09:38,703 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:09:38,705 - INFO - Added 5 follow-up tasks based on results analysis
-2025-02-28 23:09:38,707 - INFO - Executing task: sqlmap_scan:google.com
-2025-02-28 23:09:38,707 - INFO - Executing command: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
-2025-02-28 23:09:39,873 - INFO - Task completed in 1.17s: sqlmap_scan:google.com, success: True
-2025-02-28 23:09:40,947 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:09:40,950 - INFO - Added 5 follow-up tasks based on results analysis
-2025-02-28 23:09:40,951 - INFO - Executing task: sqlmap_scan:google.com
-2025-02-28 23:09:40,951 - INFO - Executing command: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
-2025-02-28 23:09:42,134 - INFO - Task completed in 1.18s: sqlmap_scan:google.com, success: True
-2025-02-28 23:09:42,188 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:09:42,188 - INFO - Task nmap_scan:google.com already exists, skipping
-2025-02-28 23:09:42,188 - INFO - Added 1 follow-up tasks based on results analysis
-2025-02-28 23:09:42,189 - INFO - Executing task: gobuster_scan:http://google.com
-2025-02-28 23:09:42,189 - INFO - Executing command: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
-2025-02-28 23:09:44,549 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:09:44,552 - INFO - Task nmap_scan:google.com already exists, skipping
-2025-02-28 23:09:44,553 - INFO - Added 1 follow-up tasks based on results analysis
-2025-02-28 23:09:44,554 - INFO - Executing task: gobuster_scan:http://google.com
-2025-02-28 23:09:44,554 - INFO - Executing command: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
-2025-02-28 23:10:31,808 - INFO - Task completed in 49.62s: gobuster_scan:http://google.com, success: True
-2025-02-28 23:10:33,768 - INFO - Task completed in 49.21s: gobuster_scan:http://google.com, success: True
-2025-02-28 23:10:36,674 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:10:36,676 - INFO - Added 4 follow-up tasks based on results analysis
-2025-02-28 23:10:36,678 - INFO - Executing task: ffuf_scan:http://google.com
-2025-02-28 23:10:36,678 - INFO - Executing command: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
-2025-02-28 23:10:38,645 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:10:38,646 - INFO - Task gobuster_scan:http://google.com/.well-known/security.txt already exists, skipping
-2025-02-28 23:10:38,647 - INFO - Task gobuster_scan:http://google.com/accounts already exists, skipping
-2025-02-28 23:10:38,647 - INFO - Task gobuster_scan:http://google.com/partners already exists, skipping
-2025-02-28 23:10:38,647 - INFO - Task gobuster_scan:http://google.com/robots.txt already exists, skipping
-2025-02-28 23:10:38,647 - INFO - Task gobuster_scan:http://google.com/search already exists, skipping
-2025-02-28 23:10:38,647 - INFO - Added 0 follow-up tasks based on results analysis
-2025-02-28 23:10:38,647 - INFO - Executing task: ffuf_scan:http://google.com
-2025-02-28 23:10:38,647 - INFO - Executing command: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
-2025-02-28 23:10:49,129 - INFO - Task completed in 12.45s: ffuf_scan:http://google.com, success: True
-2025-02-28 23:10:51,127 - INFO - Task completed in 12.48s: ffuf_scan:http://google.com, success: True
-2025-02-28 23:10:54,340 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:10:54,342 - INFO - Task ffuf_scan:http://google.com/.well-known/security.txt already exists, skipping
-2025-02-28 23:10:54,342 - INFO - Task ffuf_scan:http://google.com/apple-app-site-association already exists, skipping
-2025-02-28 23:10:54,342 - INFO - Task ffuf_scan:http://google.com/partners already exists, skipping
-2025-02-28 23:10:54,342 - INFO - Task ffuf_scan:http://google.com/business already exists, skipping
-2025-02-28 23:10:54,342 - INFO - Added 1 follow-up tasks based on results analysis
-2025-02-28 23:10:54,344 - INFO - Executing task: sqlmap_scan:http://google.com
-2025-02-28 23:10:54,344 - INFO - Executing command: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
-2025-02-28 23:10:55,431 - INFO - Task completed in 1.09s: sqlmap_scan:http://google.com, success: True
-2025-02-28 23:10:57,256 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:10:57,258 - INFO - Task ffuf_scan:http://google.com/.well-known/security.txt already exists, skipping
-2025-02-28 23:10:57,258 - INFO - Task ffuf_scan:http://google.com/apple-app-site-association already exists, skipping
-2025-02-28 23:10:57,258 - INFO - Task ffuf_scan:http://google.com/partners already exists, skipping
-2025-02-28 23:10:57,258 - INFO - Added 2 follow-up tasks based on results analysis
-2025-02-28 23:10:57,260 - INFO - Executing task: sqlmap_scan:http://google.com
-2025-02-28 23:10:57,260 - INFO - Executing command: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
-2025-02-28 23:10:57,623 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:10:57,625 - INFO - Task sqlmap_scan:http://www.google.com already exists, skipping
-2025-02-28 23:10:57,625 - INFO - Added 1 follow-up tasks based on results analysis
-2025-02-28 23:10:57,625 - INFO - Executing task: gobuster_scan:https://www.google.com/accounts
-2025-02-28 23:10:57,625 - INFO - Executing command: gobuster dir -u https://www.google.com/accounts -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_https_www.google.com_accounts.txt
-2025-02-28 23:10:57,948 - WARNING - Command failed (attempt 1/3): Error: the server returns a status code that matches the provided options for non existing urls. https://www.google.com/accounts/301e5369-3c7c-4892-a759-6c3237507748 => 302 (Length: 273). To continue please exclude the status code or the length
+2025-03-05 17:11:46,051 - INFO - Security Audit Pipeline Initialized
+2025-03-05 17:11:46,057 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of google.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-03-05 17:11:48,907 - INFO - Initial task plan created with 4 tasks
+2025-03-05 17:11:48,909 - INFO - Executing task: nmap_scan:google.com
+2025-03-05 17:11:48,909 - INFO - Executing command: nmap -sV -oN nmap_google.com.txt google.com
+2025-03-05 17:13:39,269 - INFO - Task completed in 110.36s: nmap_scan:google.com, success: True
+2025-03-05 17:13:42,414 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:13:42,414 - INFO - Added 3 follow-up tasks based on results analysis
+2025-03-05 17:13:42,415 - INFO - Executing task: gobuster_scan:google.com
+2025-03-05 17:13:42,415 - INFO - Executing command: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
+2025-03-05 17:14:33,513 - INFO - Task completed in 51.10s: gobuster_scan:google.com, success: True
+2025-03-05 17:14:38,325 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:14:38,325 - INFO - Added 5 follow-up tasks based on results analysis
+2025-03-05 17:14:38,326 - INFO - Executing task: ffuf_scan:google.com
+2025-03-05 17:14:38,326 - INFO - Executing command: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
+2025-03-05 17:14:51,012 - INFO - Task completed in 12.69s: ffuf_scan:google.com, success: True
+2025-03-05 17:14:55,633 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:14:55,633 - INFO - Added 5 follow-up tasks based on results analysis
+2025-03-05 17:14:55,634 - INFO - Executing task: sqlmap_scan:google.com
+2025-03-05 17:14:55,634 - INFO - Executing command: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
+2025-03-05 17:14:58,079 - INFO - Task completed in 2.44s: sqlmap_scan:google.com, success: True
+2025-03-05 17:15:00,217 - INFO - Task nmap_scan:google.com already exists, skipping
+2025-03-05 17:15:00,218 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:15:00,218 - INFO - Added 1 follow-up tasks based on results analysis
+2025-03-05 17:15:00,219 - INFO - Executing task: gobuster_scan:http://google.com
+2025-03-05 17:15:00,219 - INFO - Executing command: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
+2025-03-05 17:15:51,589 - INFO - Task completed in 51.37s: gobuster_scan:http://google.com, success: True
+2025-03-05 17:15:55,944 - INFO - Task gobuster_scan:http://google.com/.well-known/security.txt already exists, skipping
+2025-03-05 17:15:55,944 - INFO - Task gobuster_scan:http://google.com/accounts already exists, skipping
+2025-03-05 17:15:55,946 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:15:55,946 - INFO - Added 3 follow-up tasks based on results analysis
+2025-03-05 17:15:55,947 - INFO - Executing task: ffuf_scan:http://google.com
+2025-03-05 17:15:55,947 - INFO - Executing command: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
+2025-03-05 17:16:08,538 - INFO - Task completed in 12.59s: ffuf_scan:http://google.com, success: True
+2025-03-05 17:16:13,556 - INFO - Task ffuf_scan:http://google.com/.well-known/security.txt already exists, skipping
+2025-03-05 17:16:13,556 - INFO - Task ffuf_scan:http://google.com/apple-app-site-association already exists, skipping
+2025-03-05 17:16:13,556 - INFO - Task ffuf_scan:http://google.com/accounts already exists, skipping
+2025-03-05 17:16:13,556 - INFO - Task ffuf_scan:http://google.com/business already exists, skipping
+2025-03-05 17:16:13,556 - INFO - Task ffuf_scan:http://google.com/news already exists, skipping
+2025-03-05 17:16:13,556 - INFO - Added 0 follow-up tasks based on results analysis
+2025-03-05 17:16:13,557 - INFO - Executing task: sqlmap_scan:http://google.com
+2025-03-05 17:16:13,557 - INFO - Executing command: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
+2025-03-05 17:16:15,828 - INFO - Task completed in 2.27s: sqlmap_scan:http://google.com, success: True
+2025-03-05 17:16:17,559 - INFO - Task sqlmap_scan:http://www.google.com already exists, skipping
+2025-03-05 17:16:17,560 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:16:17,560 - INFO - Added 1 follow-up tasks based on results analysis
+2025-03-05 17:16:17,561 - INFO - Executing task: gobuster_scan:http://google.com/.well-known/security.txt
+2025-03-05 17:16:17,561 - INFO - Executing command: gobuster dir -u http://google.com/.well-known/security.txt -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_.well-known_security.txt.txt
+2025-03-05 17:17:09,152 - INFO - Task completed in 51.59s: gobuster_scan:http://google.com/.well-known/security.txt, success: True
+2025-03-05 17:17:11,922 - INFO - Task gobuster_scan:http://google.com/.well-known/security.txt already exists, skipping
+2025-03-05 17:17:11,923 - INFO - Task nmap_scan:google.com already exists, skipping
+2025-03-05 17:17:11,925 - INFO - Follow-up tasks logged to tasks_logs/initial_tasks_20250305_171148.json
+2025-03-05 17:17:11,925 - INFO - Added 1 follow-up tasks based on results analysis
+2025-03-05 17:17:11,926 - INFO - Executing task: gobuster_scan:http://google.com/accounts
+2025-03-05 17:17:11,926 - INFO - Executing command: gobuster dir -u http://google.com/accounts -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_accounts.txt
+2025-03-05 17:17:12,224 - WARNING - Command failed (attempt 1/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/accounts/15d1ac36-a46c-447f-8f7f-b89fb84c9a62 => 302 (Length: 273). To continue please exclude the status code or the length
 
-2025-02-28 23:10:58,377 - INFO - Task completed in 1.12s: sqlmap_scan:http://google.com, success: True
-2025-02-28 23:11:00,379 - WARNING - Command failed (attempt 2/3): Error: the server returns a status code that matches the provided options for non existing urls. https://www.google.com/accounts/62dd45d6-37b3-4957-aa1e-02736e14e5f9 => 302 (Length: 273). To continue please exclude the status code or the length
+2025-03-05 17:17:14,636 - WARNING - Command failed (attempt 2/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/accounts/4e96263c-5b3c-48bc-95ab-ff092f904b8b => 302 (Length: 273). To continue please exclude the status code or the length
 
-2025-02-28 23:11:00,739 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:11:00,742 - INFO - Task sqlmap_scan:http://www.google.com already exists, skipping
-2025-02-28 23:11:00,742 - INFO - Added 1 follow-up tasks based on results analysis
-2025-02-28 23:11:00,743 - INFO - Executing task: gobuster_scan:http://google.com/.well-known/security.txt
-2025-02-28 23:11:00,743 - INFO - Executing command: gobuster dir -u http://google.com/.well-known/security.txt -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_.well-known_security.txt.txt
-2025-02-28 23:11:04,724 - WARNING - Command failed (attempt 3/3): Error: the server returns a status code that matches the provided options for non existing urls. https://www.google.com/accounts/f4e9cfff-4271-4bc7-9f4b-571336d85c34 => 302 (Length: 273). To continue please exclude the status code or the length
+2025-03-05 17:17:18,936 - WARNING - Command failed (attempt 3/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/accounts/f1c83f70-afd4-4e12-a808-381b78b26b9b => 302 (Length: 273). To continue please exclude the status code or the length
 
-2025-02-28 23:11:04,725 - INFO - Task completed in 7.10s: gobuster_scan:https://www.google.com/accounts, success: False
-2025-02-28 23:11:04,727 - INFO - Executing task: gobuster_scan:https://www.google.com/.well-known/security.txt
-2025-02-28 23:11:04,727 - INFO - Executing command: gobuster dir -u https://www.google.com/.well-known/security.txt -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_https_www.google.com_.well-known_security.txt.txt
-2025-02-28 23:11:54,107 - INFO - Task completed in 53.36s: gobuster_scan:http://google.com/.well-known/security.txt, success: True
-2025-02-28 23:11:57,769 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:11:57,773 - INFO - Task ffuf_scan:http://google.com/.well-known/security.txt already exists, skipping
-2025-02-28 23:11:57,773 - INFO - Task nmap_scan:google.com already exists, skipping
-2025-02-28 23:11:57,773 - INFO - Added 1 follow-up tasks based on results analysis
-2025-02-28 23:11:57,774 - INFO - Executing task: gobuster_scan:http://google.com/accounts
-2025-02-28 23:11:57,775 - INFO - Executing command: gobuster dir -u http://google.com/accounts -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_accounts.txt
-2025-02-28 23:11:58,068 - WARNING - Command failed (attempt 1/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/accounts/8dd74bd1-a39c-44ea-9c50-810cf9aa9f92 => 302 (Length: 273). To continue please exclude the status code or the length
+2025-03-05 17:17:18,936 - INFO - Task completed in 7.01s: gobuster_scan:http://google.com/accounts, success: False
+2025-03-05 17:17:18,939 - INFO - Executing task: gobuster_scan:http://google.com/partners
+2025-03-05 17:17:18,939 - INFO - Executing command: gobuster dir -u http://google.com/partners -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_partners.txt
+2025-03-05 17:17:19,817 - WARNING - Command failed (attempt 1/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/partners/eff116c0-eece-4d73-84e1-42f5c1697dca => 403 (Length: 1103). To continue please exclude the status code or the length
 
-2025-02-28 23:11:58,502 - INFO - Task completed in 53.77s: gobuster_scan:https://www.google.com/.well-known/security.txt, success: True
-2025-02-28 23:12:00,358 - WARNING - Command failed (attempt 2/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/accounts/ebd6dd2a-5dca-4d90-87d3-9bb1fdfe21f0 => 302 (Length: 273). To continue please exclude the status code or the length
+2025-03-05 17:17:22,879 - WARNING - Command failed (attempt 2/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/partners/2ce75095-6835-47d0-8b7a-42fef5a248d5 => 403 (Length: 1103). To continue please exclude the status code or the length
 
-2025-02-28 23:12:01,257 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:12:01,260 - INFO - Added 3 follow-up tasks based on results analysis
-2025-02-28 23:12:01,262 - INFO - Executing task: gobuster_scan:https://www.google.com/partners
-2025-02-28 23:12:01,262 - INFO - Executing command: gobuster dir -u https://www.google.com/partners -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_https_www.google.com_partners.txt
-2025-02-28 23:12:04,651 - WARNING - Command failed (attempt 3/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/accounts/fbfa677c-8497-45ab-800b-9684382caa4a => 302 (Length: 273). To continue please exclude the status code or the length
+2025-03-05 17:17:27,691 - WARNING - Command failed (attempt 3/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/partners/cc871131-3010-4ec6-a0a2-93c75cb55901 => 403 (Length: 1103). To continue please exclude the status code or the length
 
-2025-02-28 23:12:04,652 - INFO - Task completed in 6.88s: gobuster_scan:http://google.com/accounts, success: False
-2025-02-28 23:12:04,655 - INFO - Executing task: gobuster_scan:http://google.com/partners
-2025-02-28 23:12:04,655 - INFO - Executing command: gobuster dir -u http://google.com/partners -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_partners.txt
-2025-02-28 23:14:06,590 - INFO - Task completed in 121.94s: gobuster_scan:http://google.com/partners, success: True
-2025-02-28 23:14:07,391 - INFO - Task completed in 126.13s: gobuster_scan:https://www.google.com/partners, success: True
-2025-02-28 23:14:15,504 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:14:15,506 - INFO - Added 4 follow-up tasks based on results analysis
-2025-02-28 23:14:15,508 - INFO - Executing task: gobuster_scan:https://www.google.com/analytics
-2025-02-28 23:14:15,508 - INFO - Executing command: gobuster dir -u https://www.google.com/analytics -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_https_www.google.com_analytics.txt
-2025-02-28 23:14:15,629 - WARNING - Command failed (attempt 1/3): Error: the server returns a status code that matches the provided options for non existing urls. https://www.google.com/analytics/e4d10227-bb8a-42f2-8d99-4f6ba05edb79 => 301 (Length: 240). To continue please exclude the status code or the length
+2025-03-05 17:17:27,692 - INFO - Task completed in 8.75s: gobuster_scan:http://google.com/partners, success: False
+2025-03-05 17:17:27,695 - INFO - Executing task: gobuster_scan:http://google.com/business
+2025-03-05 17:17:27,695 - INFO - Executing command: gobuster dir -u http://google.com/business -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_business.txt
+2025-03-05 17:17:27,969 - WARNING - Command failed (attempt 1/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/business/9b48f2ab-5d5b-4f3c-b5db-23af95e7cce1 => 301 (Length: 0). To continue please exclude the status code or the length
 
-2025-02-28 23:14:17,753 - WARNING - Command failed (attempt 2/3): Error: the server returns a status code that matches the provided options for non existing urls. https://www.google.com/analytics/e1f87361-aa64-42b6-b3e9-e61d921bc130 => 301 (Length: 240). To continue please exclude the status code or the length
+2025-03-05 17:17:30,292 - WARNING - Command failed (attempt 2/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/business/12683152-6302-417b-ba0d-615880b9b73b => 301 (Length: 0). To continue please exclude the status code or the length
 
-2025-02-28 23:14:18,064 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:14:18,066 - INFO - Added 5 follow-up tasks based on results analysis
-2025-02-28 23:14:18,068 - INFO - Executing task: gobuster_scan:http://google.com/robots.txt
-2025-02-28 23:14:18,068 - INFO - Executing command: gobuster dir -u http://google.com/robots.txt -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com_robots.txt.txt
-2025-02-28 23:14:21,877 - WARNING - Command failed (attempt 3/3): Error: the server returns a status code that matches the provided options for non existing urls. https://www.google.com/analytics/78091704-5fff-4ff2-9675-4200a950bad1 => 301 (Length: 240). To continue please exclude the status code or the length
+2025-03-05 17:17:34,702 - WARNING - Command failed (attempt 3/3): Error: the server returns a status code that matches the provided options for non existing urls. http://google.com/business/d8247c9f-eb13-44b8-a8a7-0aa0e4490e7d => 301 (Length: 0). To continue please exclude the status code or the length
 
-2025-02-28 23:14:21,877 - INFO - Task completed in 6.37s: gobuster_scan:https://www.google.com/analytics, success: False
-2025-02-28 23:14:21,879 - WARNING - Maximum steps reached, generating report
-2025-02-28 23:14:21,879 - INFO - Generating security report
-2025-02-28 23:14:41,620 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:14:41,633 - INFO - Security report generated and saved to security_report_20250228_231441.md
-2025-02-28 23:15:08,960 - INFO - Task completed in 50.89s: gobuster_scan:http://google.com/robots.txt, success: True
-2025-02-28 23:15:11,350 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:15:11,354 - INFO - Task nmap_scan:google.com already exists, skipping
-2025-02-28 23:15:11,354 - INFO - Added 2 follow-up tasks based on results analysis
-2025-02-28 23:15:11,355 - WARNING - Maximum steps reached, generating report
-2025-02-28 23:15:11,356 - INFO - Generating security report
-2025-02-28 23:15:43,652 - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-2025-02-28 23:15:43,662 - INFO - Security report generated and saved to security_report_20250228_231543.md
+2025-03-05 17:17:34,703 - INFO - Task completed in 7.01s: gobuster_scan:http://google.com/business, success: False
+2025-03-05 17:17:34,705 - WARNING - Maximum steps reached, generating report
+2025-03-05 17:17:34,706 - INFO - Generating security report
+2025-03-05 17:17:43,798 - INFO - Security report generated and saved to security_report_20250305_171743.md
