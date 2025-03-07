@@ -1,0 +1,39 @@
+{
+  "timestamp": "20250306_193300",
+  "objective": "Perform a comprehensive security assessment of google.com. \n    Identify open ports, discover hidden directories, and test for common web vulnerabilities \n    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.",
+  "target_scope": {
+    "allowed_domains": [
+      "google.com"
+    ],
+    "allowed_ip_ranges": [
+      "192.168.1.0/24",
+      "10.0.0.0/16"
+    ]
+  },
+  "tasks": [
+    {
+      "task_type": "nmap_scan",
+      "target": "google.com",
+      "description": "Perform a port scan to identify open ports on google.com.",
+      "priority": 1
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "google.com",
+      "description": "Discover hidden directories and files on google.com using a wordlist.",
+      "priority": 2
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "google.com",
+      "description": "Perform a fuzzing scan to identify additional hidden endpoints and resources.",
+      "priority": 3
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "google.com",
+      "description": "Test for SQL injection vulnerabilities on identified endpoints.",
+      "priority": 4
+    }
+  ]
+}

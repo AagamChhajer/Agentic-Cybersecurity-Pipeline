@@ -1,0 +1,74 @@
+{
+  "timestamp": "20250306_191107",
+  "objective": "Perform a comprehensive security assessment of google.com. \n    Identify open ports, discover hidden directories, and test for common web vulnerabilities \n    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.",
+  "target_scope": {
+    "allowed_domains": [
+      "google.com"
+    ],
+    "allowed_ip_ranges": [
+      "192.168.1.0/24",
+      "10.0.0.0/16"
+    ]
+  },
+  "tasks": [
+    {
+      "task_type": "nmap_scan",
+      "target": "google.com",
+      "description": "Perform a non-intrusive scan to identify open ports and services running on google.com.",
+      "priority": 1
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "google.com",
+      "description": "Discover hidden directories and files on google.com using a wordlist to identify potential entry points.",
+      "priority": 2
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "google.com",
+      "description": "Use ffuf to perform a fuzzing scan for hidden endpoints and files on google.com, focusing on common web vulnerabilities.",
+      "priority": 3
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "google.com",
+      "description": "Test for SQL injection vulnerabilities on google.com by targeting known parameters and endpoints.",
+      "priority": 4
+    }
+  ],
+  "follow_up_tasks": [
+    {
+      "task_type": "gobuster_scan",
+      "target": "http://google.com",
+      "description": "Perform a directory and file brute-forcing scan to discover hidden endpoints that may not be publicly listed.",
+      "priority": 2,
+      "generated_at": "20250306_191301",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com",
+      "description": "Use ffuf to perform a more advanced fuzzing attack on the web server to identify potential vulnerabilities or misconfigurations.",
+      "priority": 3,
+      "generated_at": "20250306_191301",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "http://google.com",
+      "description": "Check for SQL injection vulnerabilities in the web application, especially on any input fields that may be present.",
+      "priority": 4,
+      "generated_at": "20250306_191301",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    }
+  ]
+}

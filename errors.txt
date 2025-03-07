@@ -1,0 +1,5 @@
+1. Finding and Using a Better wordlists.
+2. Correct the target validation for routes in allowed domains
+3. False Report Generation on Outside the Scope Targets
+4. Less Follow Up Tasks due to route outside Scope
+5. Replace priority with simple sequential task queue

@@ -29,13 +29,13 @@ file_handler.setFormatter(formatter)
 file_handler.setLevel(logging.INFO)
 
 # Stream handler for terminal output
-# stream_handler = logging.StreamHandler(sys.stdout)
-# stream_handler.setFormatter(formatter)
-# stream_handler.setLevel(logging.INFO) 
+stream_handler = logging.StreamHandler(sys.stdout)
+stream_handler.setFormatter(formatter)
+stream_handler.setLevel(logging.INFO) 
 
 # Add both handlers to the logger
 logger.addHandler(file_handler)
-# logger.addHandler(stream_handler)
+logger.addHandler(stream_handler)
 
 # Ensure we don't get duplicate logs
 logger.propagate = False
@@ -60,18 +60,41 @@ class TargetScope:
     """Class to enforce and validate target scopes for security scanning."""
     
     def __init__(self, allowed_domains: List[str], allowed_ip_ranges: List[str]):
-        self.allowed_domains = allowed_domains
+        # Normalize domains (remove http/https and www)
+        self.allowed_domains = [self._normalize_domain(domain) for domain in allowed_domains]
         self.allowed_ip_ranges = [ipaddress.ip_network(ip_range) for ip_range in allowed_ip_ranges]
-        
+        # logger.info(f"Initialized target scope with domains: {self.allowed_domains}")
+        # logger.info(f"Initialized target scope with IP ranges: {self.allowed_ip_ranges}")
+    
+    def _normalize_domain(self, domain: str) -> str:
+        """Normalize domain by removing protocol and www."""
+        domain = domain.lower()
+        domain = re.sub(r'^https?://', '', domain)
+        domain = re.sub(r'^www\.', '', domain)
+        return domain.strip('/')
+    
     def is_target_allowed(self, target: str) -> bool:
         """Check if the target is within the allowed scope."""
+        # Normalize the target
+        target = self._normalize_domain(target)
+        
         # Check if it's an IP
         try:
             ip = ipaddress.ip_address(target)
-            return any(ip in ip_range for ip_range in self.allowed_ip_ranges)
+            is_allowed = any(ip in ip_range for ip_range in self.allowed_ip_ranges)
+            if not is_allowed:
+                logger.warning(f"IP {target} is outside allowed scope {self.allowed_ip_ranges}")
+            return is_allowed
         except ValueError:
             # It's a domain
-            return any(domain in target for domain in self.allowed_domains)
+            is_allowed = any(
+                target == allowed_domain or  # Exact match
+                target.endswith('.' + allowed_domain)  # Subdomain
+                for allowed_domain in self.allowed_domains
+            )
+            if not is_allowed:
+                logger.warning(f"Domain {target} is outside allowed scope {self.allowed_domains}")
+            return is_allowed
     
     def to_dict(self) -> Dict:
         """Convert the scope to a dictionary for state storage."""
@@ -98,12 +121,14 @@ class SecurityScanner:
     
     def execute_command(self, command: List[str], target: str, target_scope: TargetScope) -> Tuple[str, bool]:
         """Execute a shell command with proper timeout and error handling."""
-        if not target_scope.is_target_allowed(target):
-            error_msg = f"Target {target} is outside the allowed scope. Operation aborted."
+        # Normalize and validate target
+        normalized_target = target_scope._normalize_domain(target)
+        if not target_scope.is_target_allowed(normalized_target):
+            error_msg = f"Target {target} is outside the allowed scope {target_scope.allowed_domains}. Operation terminated."
             logger.error(error_msg)
             return error_msg, False
         
-        logger.info(f"Executing command: {' '.join(command)}")
+        logger.info(f"Executing command for validated target {normalized_target}: {' '.join(command)}")
         
         for attempt in range(self.retry_attempts):
             try:
@@ -167,7 +192,7 @@ class NmapScanner(SecurityScanner):
 class GobusterScanner(SecurityScanner):
     """Tool for running directory discovery with Gobuster."""
     
-    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/wordlists/common.txt") -> Dict:
+    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt") -> Dict:
         """Run Gobuster directory scan."""
         if not target.startswith(('http://', 'https://')):
             target = f"http://{target}"
@@ -193,7 +218,7 @@ class GobusterScanner(SecurityScanner):
 class FfufScanner(SecurityScanner):
     """Tool for fuzzing with ffuf."""
     
-    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/wordlists/common.txt") -> Dict:
+    def scan(self, target: str, target_scope: TargetScope, wordlist: str = "/Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt") -> Dict:
         """Run ffuf fuzzing."""
         if not target.startswith(('http://', 'https://')):
             target = f"http://{target}"
@@ -265,17 +290,31 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
     logger.info(f"Initializing security audit with objective: {state['objective']}")
     
     # Initialize state tracking
-    state['remaining_steps'] = 50  # Set maximum number of steps
-    state['seen_tasks'] = {}  # Initialize task deduplication tracking
+    state['remaining_steps'] = 50
+    state['seen_tasks'] = {}
     
-    # Create or restore target scope
+    # Create or restore target scope with strict validation
     if isinstance(state['target_scope'], dict):
         target_scope = TargetScope.from_dict(state['target_scope'])
     else:
-        # Default scope if none provided
-        target_scope = TargetScope(["youtube.com"], ["192.168.1.0/24"])
-        state['target_scope'] = target_scope.to_dict()
+        logger.error("No target scope provided. Audit cannot proceed.")
+        state['task_complete'] = True
+        state['report'] = "Error: No target scope provided. Audit terminated."
+        return state
     
+    # Validate all domains before proceeding
+    invalid_domains = []
+    for domain in target_scope.allowed_domains:
+        if not re.match(r'^[a-zA-Z0-9][a-zA-Z0-9-_.]*[a-zA-Z0-9]$', domain):
+            invalid_domains.append(domain)
+    
+    if invalid_domains:
+        logger.error(f"Invalid domains found in scope: {invalid_domains}")
+        state['task_complete'] = True
+        state['report'] = f"Error: Invalid domains in scope: {invalid_domains}. Audit terminated."
+        return state
+    
+
     # Set up LLM
     load_dotenv()
     api_key = os.environ.get("OPENAI_API_KEY", "")
@@ -284,22 +323,23 @@ def initialize_audit(state: SecurityAuditState) -> SecurityAuditState:
     # Create initial task plan
     prompt = ChatPromptTemplate.from_messages([
         ("system", """You are a cybersecurity expert tasked with breaking down security testing objectives into specific executable tasks.
-        Focus on creating a logical, step-by-step approach that a security tool would follow.
+        Focus on creating a logical, step-by-step approach that a security tool would follow. 
         Return the tasks as a JSON list of objects with these fields:
         - task_type: The type of task (nmap_scan, gobuster_scan, ffuf_scan, sqlmap_scan)
-        - target: The target to scan
+        - target: The target to scan 
         - description: A brief description of what this task aims to accomplish
         - priority: A number from 1-5 with 1 being highest priority
         """),
         ("human", "{objective}\n\nTarget scope: {allowed_targets}")
     ])
-    
+    allowed_targets=", ".join(target_scope.allowed_domains + [str(ip) for ip in target_scope.allowed_ip_ranges])
     response = llm.invoke(
         prompt.format(
             objective=state['objective'],
-            allowed_targets=", ".join(target_scope.allowed_domains + [str(ip) for ip in target_scope.allowed_ip_ranges])
+            allowed_targets=allowed_targets)
         )
-    )
+    
+    print("Allowed Targets : ",allowed_targets)
     
     # Extract JSON from the response
     task_list_str = re.search(r'```json\n(.*?)\n```', response.content, re.DOTALL)
@@ -346,19 +386,21 @@ def execute_next_task(state: SecurityAuditState) -> SecurityAuditState:
     
     # Get the next task
     task = state['task_queue'].pop(0)
-    task_signature = f"{task['task_type']}:{task['target']}"
-    
-    # Skip if we've seen this task before
-    if task_signature in state['seen_tasks']:
-        logger.info(f"Skipping duplicate task: {task_signature}")
-        return state
-        
-    state['seen_tasks'][task_signature] = True
-    
-    logger.info(f"Executing task: {task_signature}")
+    task_target = task['target']
     
     # Create target scope
     target_scope = TargetScope.from_dict(state['target_scope'])
+    
+    # Normalize the target
+    normalized_target = target_scope._normalize_domain(task_target)
+    task_signature = f"{task['task_type']}:{normalized_target}"
+    
+    # Check if task has already been executed
+    if task_signature in state['seen_tasks']:
+        logger.info(f"Task {task_signature} already executed, skipping")
+        return state
+    
+    logger.info(f"Executing task: {task_signature}")
     
     # Execute the task
     result = None
@@ -368,22 +410,22 @@ def execute_next_task(state: SecurityAuditState) -> SecurityAuditState:
     try:
         if task['task_type'] == 'nmap_scan':
             scanner = NmapScanner()
-            result = scanner.scan(task['target'], target_scope)
+            result = scanner.scan(normalized_target, target_scope)
             success = "error" not in result
             
         elif task['task_type'] == 'gobuster_scan':
             scanner = GobusterScanner()
-            result = scanner.scan(task['target'], target_scope)
+            result = scanner.scan(normalized_target, target_scope)
             success = "error" not in result
             
         elif task['task_type'] == 'ffuf_scan':
             scanner = FfufScanner()
-            result = scanner.scan(task['target'], target_scope)
+            result = scanner.scan(normalized_target, target_scope)
             success = "error" not in result
             
         elif task['task_type'] == 'sqlmap_scan':
             scanner = SqlmapScanner()
-            result = scanner.scan(task['target'], target_scope)
+            result = scanner.scan(normalized_target, target_scope)
             success = "error" not in result
             
         else:
@@ -392,27 +434,32 @@ def execute_next_task(state: SecurityAuditState) -> SecurityAuditState:
             success = False
             
     except Exception as e:
-        logger.error(f"Error executing {task['task_type']} on {task['target']}: {str(e)}")
+        logger.error(f"Error executing {task['task_type']} on {normalized_target}: {str(e)}")
         result = {"error": str(e)}
         success = False
     
     execution_time = time.time() - start_time
     logger.info(f"Task completed in {execution_time:.2f}s: {task_signature}, success: {success}")
     
-    # Record result
-    task_result = {
-        "task": task,
-        "result": result,
-        "success": success,
-        "execution_time": execution_time,
-        "timestamp": time.time()
-    }
-    
-    # Add to completed tasks
-    state['completed_tasks'].append(task)
-    
-    # Store result
-    state['results'][task_signature] = task_result
+    # Only mark task as seen after successful execution
+    if success:
+        state['seen_tasks'][task_signature] = True
+        
+        # Record result
+        task_result = {
+            "task": task,
+            "result": result,
+            "success": success,
+            "execution_time": execution_time,
+            "timestamp": time.time()
+        }
+        
+        # Add to completed tasks and store result
+        state['completed_tasks'].append(task)
+        state['results'][task_signature] = task_result
+    else:
+        # If task failed, we might want to retry it later
+        state['task_queue'].append(task)
     
     return state
 
@@ -469,21 +516,29 @@ def analyze_results(state: SecurityAuditState) -> SecurityAuditState:
             logger.error(f"Could not parse follow-up tasks from: {response.content}")
             follow_up_tasks = []
     
-    # Create target scope
+    # Filter and add follow-up tasks with strict scope validation
+    filtered_tasks = []
     target_scope = TargetScope.from_dict(state['target_scope'])
     
-    # Filter and add follow-up tasks
-    filtered_tasks = []
     for task in follow_up_tasks:
-        # Skip if already in the queue or completed
-        task_signature = f"{task['task_type']}:{task['target']}"
-        if task_signature in [f"{t['task_type']}:{t['target']}" for t in state['task_queue'] + state['completed_tasks']]:
-            logger.info(f"Task {task_signature} already exists, skipping")
+        task_target = target_scope._normalize_domain(task['target'])
+        task_signature = f"{task['task_type']}:{task_target}"
+        
+        # Skip if the task has already been executed successfully
+        if task_signature in state['seen_tasks']:
+            logger.info(f"Task {task_signature} already executed successfully, skipping")
             continue
         
-        # Skip if out of scope
-        if not target_scope.is_target_allowed(task['target']):
-            logger.warning(f"Task for target {task['target']} rejected as out of scope")
+        # Skip if the task is already in the queue
+        if any(t['task_type'] == task['task_type'] and 
+               target_scope._normalize_domain(t['target']) == task_target 
+               for t in state['task_queue']):
+            # logger.info(f"Task {task_signature} already in queue, skipping")
+            continue
+        
+        # Strict scope validation
+        if not target_scope.is_target_allowed(task_target):
+            logger.warning(f"Follow-up task for target {task_target} rejected: outside scope {target_scope.allowed_domains}")
             continue
         
         filtered_tasks.append(task)
@@ -664,10 +719,10 @@ if __name__ == "__main__":
     allowed_ip_ranges = ["192.168.1.0/24", "10.0.0.0/16"]
     
     # Set the security objective
-    objective = """Perform a comprehensive security assessment of google.com. 
-    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
-    including SQL injection. Ensure all tests are non-intrusive and respect the target scope."""
-    
+    # objective = """Perform a comprehensive security assessment of google.com. 
+    # Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    # including SQL injection. Ensure all tests are non-intrusive and respect the target scope."""
+    objective = "Discover open ports on google.com"
     # Run the security audit
     report = run_security_audit(objective, allowed_domains, allowed_ip_ranges)
     

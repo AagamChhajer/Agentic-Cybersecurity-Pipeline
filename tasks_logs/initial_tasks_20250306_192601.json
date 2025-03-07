@@ -1,0 +1,206 @@
+{
+  "timestamp": "20250306_192601",
+  "objective": "Perform a comprehensive security assessment of google.com. \n    Identify open ports, discover hidden directories, and test for common web vulnerabilities \n    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.",
+  "target_scope": {
+    "allowed_domains": [
+      "google.com"
+    ],
+    "allowed_ip_ranges": [
+      "192.168.1.0/24",
+      "10.0.0.0/16"
+    ]
+  },
+  "tasks": [
+    {
+      "task_type": "nmap_scan",
+      "target": "google.com",
+      "description": "Perform a non-intrusive scan to identify open ports and services running on google.com.",
+      "priority": 1
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "google.com",
+      "description": "Use Gobuster to discover hidden directories and files on google.com by brute-forcing common paths.",
+      "priority": 2
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "google.com",
+      "description": "Utilize FFUF to perform a more extensive directory and file enumeration on google.com, focusing on common web vulnerabilities.",
+      "priority": 3
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "google.com",
+      "description": "Test for SQL injection vulnerabilities on google.com using SQLMap, ensuring that the tests are non-intrusive.",
+      "priority": 4
+    }
+  ],
+  "follow_up_tasks": [
+    {
+      "task_type": "gobuster_scan",
+      "target": "http://google.com",
+      "description": "Perform a directory brute-force scan to discover hidden endpoints or directories that may not be publicly listed.",
+      "priority": 2,
+      "generated_at": "20250306_192754",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com",
+      "description": "Use ffuf to fuzz specific endpoints for vulnerabilities such as XSS or SQL injection, especially on the open HTTP port.",
+      "priority": 3,
+      "generated_at": "20250306_192754",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "http://google.com",
+      "description": "Test for SQL injection vulnerabilities on any query parameters or forms found during the gobuster or ffuf scans.",
+      "priority": 4,
+      "generated_at": "20250306_192754",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "https://www.google.com/.well-known/security.txt",
+      "description": "The presence of a security.txt file may contain important information regarding the security policies and contact details for vulnerabilities. This could provide insights into how Google handles security issues.",
+      "priority": 2,
+      "generated_at": "20250306_192849",
+      "source_task": {
+        "type": "gobuster_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "https://www.google.com/accounts",
+      "description": "The accounts endpoint may provide insights into user account management and security features. Investigating this could reveal potential vulnerabilities related to user authentication.",
+      "priority": 3,
+      "generated_at": "20250306_192849",
+      "source_task": {
+        "type": "gobuster_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "https://www.google.com/analytics",
+      "description": "The analytics endpoint could expose sensitive data regarding user interactions and site performance. Understanding its security posture is crucial.",
+      "priority": 3,
+      "generated_at": "20250306_192849",
+      "source_task": {
+        "type": "gobuster_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "https://www.google.com/robots.txt",
+      "description": "The robots.txt file can provide insights into which parts of the site are disallowed for web crawlers, potentially revealing sensitive areas that should be further investigated.",
+      "priority": 4,
+      "generated_at": "20250306_192849",
+      "source_task": {
+        "type": "gobuster_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "https://www.google.com/search",
+      "description": "The search endpoint may have security implications related to data exposure and user queries. Investigating this could uncover potential vulnerabilities.",
+      "priority": 4,
+      "generated_at": "20250306_192849",
+      "source_task": {
+        "type": "gobuster_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com/.well-known/security.txt",
+      "description": "The presence of a security.txt file can provide insights into the security policies and contact information for vulnerabilities. Investigating this endpoint may reveal important security practices or points of contact.",
+      "priority": 2,
+      "generated_at": "20250306_192907",
+      "source_task": {
+        "type": "ffuf_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com/apple-app-site-association",
+      "description": "This endpoint is used for app linking and may contain sensitive information about the applications associated with the domain. Further investigation could uncover potential security issues.",
+      "priority": 3,
+      "generated_at": "20250306_192907",
+      "source_task": {
+        "type": "ffuf_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com/partners",
+      "description": "The partners endpoint may provide information about third-party integrations or partnerships that could be exploited. Understanding this could help in assessing the security posture of the domain.",
+      "priority": 3,
+      "generated_at": "20250306_192907",
+      "source_task": {
+        "type": "ffuf_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com/robots.txt",
+      "description": "The robots.txt file can reveal which parts of the site are restricted from web crawlers. This could provide insights into sensitive areas of the site that may not be intended for public access.",
+      "priority": 4,
+      "generated_at": "20250306_192907",
+      "source_task": {
+        "type": "ffuf_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com/sitemap.xml",
+      "description": "Sitemaps can provide a comprehensive list of URLs on the site, which may include hidden or less accessible endpoints. Analyzing this could help identify additional targets for further investigation.",
+      "priority": 4,
+      "generated_at": "20250306_192907",
+      "source_task": {
+        "type": "ffuf_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "http://www.google.com",
+      "description": "The initial sqlmap scan indicated a potential vulnerability, but no parameters were found for testing. A follow-up scan with form crawling and additional options is necessary to identify exploitable parameters.",
+      "priority": 1,
+      "generated_at": "20250306_192912",
+      "source_task": {
+        "type": "sqlmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "http://www.google.com",
+      "description": "To further investigate potential vulnerabilities, a directory and file brute-forcing scan using Gobuster can help uncover hidden endpoints that may be susceptible to SQL injection or other attacks.",
+      "priority": 3,
+      "generated_at": "20250306_192933",
+      "source_task": {
+        "type": "sqlmap_scan",
+        "target": "google.com"
+      }
+    }
+  ]
+}

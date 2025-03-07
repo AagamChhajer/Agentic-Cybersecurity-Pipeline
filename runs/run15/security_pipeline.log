@@ -1,0 +1,37 @@
+2025-03-06 19:32:52,457 - INFO - Security Audit Pipeline Initialized
+2025-03-06 19:32:52,464 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of google.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-03-06 19:33:00,616 - INFO - Initial task plan created with 4 tasks
+2025-03-06 19:33:00,617 - INFO - Executing task: nmap_scan:google.com
+2025-03-06 19:33:00,617 - INFO - Executing command for validated target google.com: nmap -sV -oN nmap_google.com.txt google.com
+2025-03-06 19:34:51,281 - INFO - Task completed in 110.66s: nmap_scan:google.com, success: True
+2025-03-06 19:34:54,964 - INFO - Added 0 follow-up tasks based on results analysis
+2025-03-06 19:34:54,967 - INFO - Executing task: gobuster_scan:google.com
+2025-03-06 19:34:54,967 - INFO - Executing command for validated target google.com: gobuster dir -u http://google.com -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o gobuster_http_google.com.txt
+2025-03-06 19:35:45,579 - INFO - Task completed in 50.61s: gobuster_scan:google.com, success: True
+2025-03-06 19:35:51,789 - WARNING - Domain google.com/.well-known/security.txt is outside allowed scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Follow-up task for target google.com/.well-known/security.txt rejected: outside scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Domain google.com/partners is outside allowed scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Follow-up task for target google.com/partners rejected: outside scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Domain google.com/accounts is outside allowed scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Follow-up task for target google.com/accounts rejected: outside scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Domain google.com/robots.txt is outside allowed scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Follow-up task for target google.com/robots.txt rejected: outside scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Domain google.com/search is outside allowed scope ['google.com']
+2025-03-06 19:35:51,789 - WARNING - Follow-up task for target google.com/search rejected: outside scope ['google.com']
+2025-03-06 19:35:51,789 - INFO - Added 0 follow-up tasks based on results analysis
+2025-03-06 19:35:51,791 - INFO - Executing task: ffuf_scan:google.com
+2025-03-06 19:35:51,791 - INFO - Executing command for validated target google.com: ffuf -u http://google.com/FUZZ -w /Users/aagamchhajer/wordlists/SecLists/Discovery/Web-Content/common.txt -o ffuf_http_google.com.json -of json
+2025-03-06 19:36:04,226 - INFO - Task completed in 12.43s: ffuf_scan:google.com, success: True
+2025-03-06 19:36:06,868 - INFO - Task gobuster_scan:google.com already executed successfully, skipping
+2025-03-06 19:36:06,869 - INFO - Task nmap_scan:google.com already executed successfully, skipping
+2025-03-06 19:36:06,869 - INFO - Added 0 follow-up tasks based on results analysis
+2025-03-06 19:36:06,870 - INFO - Executing task: sqlmap_scan:google.com
+2025-03-06 19:36:06,870 - INFO - Executing command for validated target google.com: sqlmap -u http://google.com --batch --output-dir=sqlmap_results
+2025-03-06 19:36:08,622 - INFO - Task completed in 1.75s: sqlmap_scan:google.com, success: True
+2025-03-06 19:36:18,932 - INFO - Task sqlmap_scan:google.com already executed successfully, skipping
+2025-03-06 19:36:18,932 - INFO - Task nmap_scan:google.com already executed successfully, skipping
+2025-03-06 19:36:18,932 - INFO - Added 0 follow-up tasks based on results analysis
+2025-03-06 19:36:18,933 - INFO - Generating security report
+2025-03-06 19:36:36,770 - INFO - Security report generated and saved to security_report_20250306_193636.md

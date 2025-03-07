@@ -1,0 +1,68 @@
+{
+  "timestamp": "20250306_202310",
+  "objective": "Discover open ports on google.com",
+  "target_scope": {
+    "allowed_domains": [
+      "google.com"
+    ],
+    "allowed_ip_ranges": [
+      "192.168.1.0/24",
+      "10.0.0.0/16"
+    ]
+  },
+  "tasks": [
+    {
+      "task_type": "nmap_scan",
+      "target": "google.com",
+      "description": "Perform a network scan to discover open ports on google.com.",
+      "priority": 1
+    },
+    {
+      "task_type": "nmap_scan",
+      "target": "192.168.1.0/24",
+      "description": "Perform a network scan to discover open ports on the local subnet 192.168.1.0/24.",
+      "priority": 2
+    },
+    {
+      "task_type": "nmap_scan",
+      "target": "10.0.0.0/16",
+      "description": "Perform a network scan to discover open ports on the local subnet 10.0.0.0/16.",
+      "priority": 3
+    }
+  ],
+  "follow_up_tasks": [
+    {
+      "task_type": "gobuster_scan",
+      "target": "http://google.com",
+      "description": "Perform a directory and file brute-forcing scan to discover hidden endpoints that may not be publicly listed.",
+      "priority": 2,
+      "generated_at": "20250306_202503",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com",
+      "description": "Use ffuf to perform a more advanced fuzzing scan for potential vulnerabilities in the web application, focusing on parameters and endpoints.",
+      "priority": 3,
+      "generated_at": "20250306_202503",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "http://google.com",
+      "description": "Check for SQL injection vulnerabilities in any parameters or forms that may be present on the site.",
+      "priority": 4,
+      "generated_at": "20250306_202503",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    }
+  ]
+}

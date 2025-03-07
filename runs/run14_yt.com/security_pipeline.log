@@ -1,0 +1,52 @@
+2025-03-06 19:22:15,789 - INFO - Security Audit Pipeline Initialized
+2025-03-06 19:22:15,795 - INFO - Initializing security audit with objective: Perform a comprehensive security assessment of youtube.com. 
+    Identify open ports, discover hidden directories, and test for common web vulnerabilities 
+    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.
+2025-03-06 19:22:19,179 - INFO - Initial task plan created with 4 tasks
+2025-03-06 19:22:19,179 - INFO - Executing task: nmap_scan:youtube.com
+2025-03-06 19:22:19,180 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,180 - ERROR - Target youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,180 - INFO - Task completed in 0.00s: nmap_scan:youtube.com, success: False
+2025-03-06 19:22:19,180 - INFO - Executing task: gobuster_scan:youtube.com
+2025-03-06 19:22:19,180 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,180 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,180 - INFO - Task completed in 0.00s: gobuster_scan:youtube.com, success: False
+2025-03-06 19:22:19,181 - INFO - Executing task: ffuf_scan:youtube.com
+2025-03-06 19:22:19,181 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,181 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,181 - INFO - Task completed in 0.00s: ffuf_scan:youtube.com, success: False
+2025-03-06 19:22:19,181 - INFO - Executing task: sqlmap_scan:youtube.com
+2025-03-06 19:22:19,181 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,181 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,181 - INFO - Task completed in 0.00s: sqlmap_scan:youtube.com, success: False
+2025-03-06 19:22:19,182 - INFO - Executing task: nmap_scan:youtube.com
+2025-03-06 19:22:19,182 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,182 - ERROR - Target youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,182 - INFO - Task completed in 0.00s: nmap_scan:youtube.com, success: False
+2025-03-06 19:22:19,182 - INFO - Executing task: gobuster_scan:youtube.com
+2025-03-06 19:22:19,182 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,182 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,182 - INFO - Task completed in 0.00s: gobuster_scan:youtube.com, success: False
+2025-03-06 19:22:19,183 - INFO - Executing task: ffuf_scan:youtube.com
+2025-03-06 19:22:19,183 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,183 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,183 - INFO - Task completed in 0.00s: ffuf_scan:youtube.com, success: False
+2025-03-06 19:22:19,183 - INFO - Executing task: sqlmap_scan:youtube.com
+2025-03-06 19:22:19,183 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,183 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,183 - INFO - Task completed in 0.00s: sqlmap_scan:youtube.com, success: False
+2025-03-06 19:22:19,184 - INFO - Executing task: nmap_scan:youtube.com
+2025-03-06 19:22:19,184 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,184 - ERROR - Target youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,184 - INFO - Task completed in 0.00s: nmap_scan:youtube.com, success: False
+2025-03-06 19:22:19,184 - INFO - Executing task: gobuster_scan:youtube.com
+2025-03-06 19:22:19,184 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,184 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,184 - INFO - Task completed in 0.00s: gobuster_scan:youtube.com, success: False
+2025-03-06 19:22:19,184 - INFO - Executing task: ffuf_scan:youtube.com
+2025-03-06 19:22:19,184 - WARNING - Domain youtube.com is outside allowed scope ['google.com']
+2025-03-06 19:22:19,184 - ERROR - Target http://youtube.com is outside the allowed scope ['google.com']. Operation terminated.
+2025-03-06 19:22:19,184 - INFO - Task completed in 0.00s: ffuf_scan:youtube.com, success: False
+2025-03-06 19:22:19,185 - WARNING - Maximum steps reached, generating report
+2025-03-06 19:22:19,185 - INFO - Generating security report
+2025-03-06 19:22:30,984 - INFO - Security report generated and saved to security_report_20250306_192230.md

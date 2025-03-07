@@ -1,0 +1,107 @@
+{
+  "timestamp": "20250306_185809",
+  "objective": "Perform a comprehensive security assessment of google.com. \n    Identify open ports, discover hidden directories, and test for common web vulnerabilities \n    including SQL injection. Ensure all tests are non-intrusive and respect the target scope.",
+  "target_scope": {
+    "allowed_domains": [
+      "google.com"
+    ],
+    "allowed_ip_ranges": [
+      "192.168.1.0/24",
+      "10.0.0.0/16"
+    ]
+  },
+  "tasks": [
+    {
+      "task_type": "nmap_scan",
+      "target": "google.com",
+      "description": "Perform a port scan to identify open ports on google.com.",
+      "priority": 1
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "google.com",
+      "description": "Discover hidden directories and files on google.com using a wordlist.",
+      "priority": 2
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "google.com",
+      "description": "Perform a fuzzing scan to identify additional hidden endpoints and resources.",
+      "priority": 3
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "google.com",
+      "description": "Test for SQL injection vulnerabilities on identified endpoints.",
+      "priority": 4
+    }
+  ],
+  "follow_up_tasks": [
+    {
+      "task_type": "gobuster_scan",
+      "target": "http://google.com",
+      "description": "Perform a directory and file brute-forcing scan to discover hidden endpoints that may not be publicly listed.",
+      "priority": 2,
+      "generated_at": "20250306_190003",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "ffuf_scan",
+      "target": "http://google.com",
+      "description": "Use fuzzing to identify potential vulnerabilities in the web application by testing various input parameters.",
+      "priority": 3,
+      "generated_at": "20250306_190003",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "http://google.com",
+      "description": "Check for SQL injection vulnerabilities in the web application, especially on any input fields that may be present.",
+      "priority": 4,
+      "generated_at": "20250306_190003",
+      "source_task": {
+        "type": "nmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "sqlmap_scan",
+      "target": "http://www.google.com",
+      "description": "The initial scan indicated a potential vulnerability, but no parameters were found for testing. A follow-up scan with form crawling is necessary to identify exploitable parameters.",
+      "priority": 2,
+      "generated_at": "20250306_190023",
+      "source_task": {
+        "type": "sqlmap_scan",
+        "target": "google.com"
+      }
+    },
+    {
+      "task_type": "nmap_scan",
+      "target": "http://www.google.com",
+      "description": "Conducting an Nmap scan will help identify open ports and services running on the target, which could provide additional vectors for exploitation or further investigation.",
+      "priority": 2,
+      "generated_at": "20250306_190042",
+      "source_task": {
+        "type": "sqlmap_scan",
+        "target": "http://google.com"
+      }
+    },
+    {
+      "task_type": "gobuster_scan",
+      "target": "http://www.google.com",
+      "description": "A Gobuster scan can help discover hidden directories and files on the web server, which may lead to additional vulnerabilities or sensitive information that could be exploited.",
+      "priority": 3,
+      "generated_at": "20250306_190047",
+      "source_task": {
+        "type": "sqlmap_scan",
+        "target": "http://www.google.com"
+      }
+    }
+  ]
+}
